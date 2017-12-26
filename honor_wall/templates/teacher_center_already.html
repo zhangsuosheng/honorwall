@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>荣誉墙个人中心(教师)</title>
+
+    <!-- Bootstrap -->
+      {% load static %}
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/teacher_center_checking.css' %}" rel="stylesheet">
+
+  </head>
+  <body>
+      {% if none %}<script>alert("该项信息已经审核完毕")</script>{% endif %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!--<a class="navbar-brand" href="../index">管理中心</a>-->
+            <a class="navbar-brand" href="../index">管理中心</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">返回主页</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul> -->
+            <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                <img class="" src="" alt="图标"/>
+                <!-- 用户登陆后用户名信息 -->
+                <p id="log-welcome-teacher">欢迎:  {% if request.cookie.username %}{{request.cookie.username}}{% else %}{{"加载错误"}}{% endif %}</p>
+                <button class="btn btn-info nav-btn" disabled>管理中心</button>
+                <button class="btn btn-info nav-btn" >返回主页</button>
+                <button id="teacher-logout"class="btn btn-danger nav-btn">登出</button>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="./checking">审核 <span class="sr-only">(current)</span></a></li>
+
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./studentmessagechange">学生信息修改/查询</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./message_out">信息管理</a></li>
+                <li class="second"><a href="./message_out">&nbsp&nbsp&nbsp信息发布</a></li>
+                <li class="second"><a href="./message_outed">&nbsp&nbsp&nbsp已发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./letter_checked">审核推荐信</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./setting">设置</a></li>
+            </ul>
+        </div>
+        <!--页面其他部分的内容  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="dropdown hidden-lg hidden-md hidden-sm col-xs-12" align="center">
+                <button class="btn btn-warning btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    当前位置：审核
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+                    <li><a href="./checking">审核</a></li>
+                    <li><a href="./studentmessagechange">学生信息修改查询</a></li>
+                    <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+                    <li><a href="./message_out">信息发布</a></li>
+                    <li><a href="./message_outed">已发布信息</a></li>
+                    <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+                    <li><a href="./letter_checked">审核推荐信</a></li>
+                    <li><a href="./setting">设置</a></li>
+                </ul>
+            </div>
+            <div class="hidden-lg hidden-md hidden-sm col-xs-12"><br></div>
+            <ul id="myTab" class="nav nav-tabs">
+                <li id="Aa"><a href="checkingwhere=1" >竞赛奖项审核</a></li>
+                <li id="Bb"><a href="checkingwhere=2" >期刊论文审核</a></li>
+                <li id="Cc"><a href="checkingwhere=3" >会议论文审核</a></li>
+                <li id="Dd"><a href="checkingwhere=4" >专利审核</a></li>
+                <li  id="Ee"><a href="checkingwhere=5" >奖学金审核</a></li>
+                <li id="Ff"><a href="checkingwhere=6" >社会经历审核</a></li>
+                <li class="active" id="Gg"><a href="#G" >已审核</a></li>
+            </ul>
+
+
+                <div class="tab-pane fade in active"class="tab-pane fade" id="G">
+                    <h3>已审核</h3>
+                    <h4 id="b123">审核列表<small>(概略信息)&nbsp&nbsp&nbsp&nbsp&nbsp请点击审核状态重新进行审核</small></h2>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                                <label for="stu_honorprice_contest_2" >类别选择</label>
+                                <select id="stu_honorprice_contest_2" class="form-control">
+                                    <option value="null">—— 请选择 ——</option>
+                                    <option>竞赛</option>
+                                    <option>期刊论文</option>
+                                    <option>会议论文</option>
+                                    <option>专利</option>
+                                    <option>奖学金</option>
+                                    <option>社会经历</option>
+                                    <option>全部</option>
+                                </select>
+                                <a class="btn btn-warning" onclick="alert(1);return false" style="margin-top:10px" id="sha">筛选</a>
+                        </div>
+                    </form>
+                        <div id="my_table_7" style="height: 100px;"></div>
+                </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/teacher_center.js' %}"></script>
+  </body>
+</html>

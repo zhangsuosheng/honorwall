@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This is a blog</title>
+</head>
+<body>
+<form method="post" action="../login/">
+    <input name="username" type="text"><br>
+    <input name="password" type="password"><br>
+   {{ error }}<br>
+    <button id="btn" type="submit">登录</button>
+    {% csrf_token %}
+</form>
+Hello ! login page!
+</body>
+</html>

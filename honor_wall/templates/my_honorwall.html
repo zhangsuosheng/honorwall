@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>西安交通大学荣誉墙</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/site.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dispage.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.js' %}"></script>
+    <![endif]-->
+    <style>
+
+        table {
+            *border-collapse: collapse; /* IE7 and lower */
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .bordered {
+            border: solid #ccc 1px;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            -webkit-box-shadow: 0 1px 1px #ccc;
+            -moz-box-shadow: 0 1px 1px #ccc;
+            box-shadow: 0 1px 1px #ccc;
+        }
+
+        .bordered tr:hover {
+            background: #fbf8e9;
+            -o-transition: all 0.1s ease-in-out;
+            -webkit-transition: all 0.1s ease-in-out;
+            -moz-transition: all 0.1s ease-in-out;
+            -ms-transition: all 0.1s ease-in-out;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .bordered td, .bordered th {
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .bordered th {
+            background-color: #dce9f9;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+            background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+            background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+            background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+            background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+            background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+            -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+            -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+            box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+            border-top: none;
+            text-shadow: 0 1px 0 rgba(255,255,255,.5);
+        }
+
+        .bordered td:first-child, .bordered th:first-child {
+            border-left: none;
+        }
+
+        .bordered th:first-child {
+            -moz-border-radius: 6px 0 0 0;
+            -webkit-border-radius: 6px 0 0 0;
+            border-radius: 6px 0 0 0;
+        }
+
+        .bordered th:last-child {
+            -moz-border-radius: 0 6px 0 0;
+            -webkit-border-radius: 0 6px 0 0;
+            border-radius: 0 6px 0 0;
+        }
+
+        .bordered th:only-child{
+            -moz-border-radius: 6px 6px 0 0;
+            -webkit-border-radius: 6px 6px 0 0;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .bordered tr:last-child td:first-child {
+            -moz-border-radius: 0 0 0 6px;
+            -webkit-border-radius: 0 0 0 6px;
+            border-radius: 0 0 0 6px;
+        }
+
+        .bordered tr:last-child td:last-child {
+            -moz-border-radius: 0 0 6px 0;
+            -webkit-border-radius: 0 0 6px 0;
+            border-radius: 0 0 6px 0;
+        }
+
+        .blog-footer {
+            padding: 40px 0;
+            color: black;
+            text-align: center;
+            background-color: white;
+            border-top: 1px solid #e5e5e5;
+        }
+        .blog-footer p:last-child {
+            margin-bottom: 0;
+        }
+
+    </style>
+</head>
+<body style="background-image: url({% static 'img/bgnoise_lg.png' %});">
+<!--<body style="background-color: #cccccc">-->
+<nav class="navbar navbar-fixed-top" style="background-color: white">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only" style="background-color: #990033">Toggle navigation</span>
+                <span class="icon-bar" style="background-color: #990033"></span>
+                <span class="icon-bar" style="background-color: #990033"></span>
+                <span class="icon-bar" style="background-color: #990033"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'img/xjtu_icon.jpg' %}" height="25px" width="25px">
+            </a>
+            <a class="navbar-brand" style="color: black;font-family: 幼圆;">荣誉墙<small>Honor Wall</small></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <form class="navbar-form  navbar-right">
+                <a class="headformyhonorwall btn" href="{% url 'index' %}">返回主页</a>
+                <a class="headformyhonorwall btn" href="{% url 'student_center' %}">我的个人中心</a>
+                <a class="headformyhonorwall btn" href="">我的荣誉墙</a>
+                <a class="headformyhonorwall btn" href="{% url 'logout' %}">注销</a>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="hidden-xs" style="padding-top: 20px;padding-bottom: 20px;padding-left: 100px;padding-right: 100px;background-color: #990033">
+    <div style="padding-top: 10px;padding-bottom: 10px;padding-left: 10px;padding-right: 10px;background-color: white">
+        <div align="center" style="padding-top: 70px;width: 100%;height: 350px;background-image: url({% static 'img/xjtu3.jpg' %});background-repeat:no-repeat; background-attachment: fixed;background-size: 100% 100%;">
+            <img src="{% static 'img/face_xjtu.jpg' %}" style="width: 150px;height: 150px;margin-bottom: 20px;" class="img-circle"><br>
+            <label name="netname" id="netname" class="headName" style="font-size: 25px;">{{ student_message_editable.student_nickname }}</label>
+            <img src="{% static 'img/boy_white.png' %}" style="height: 25px;width: 25px;">
+            <br><label name="sign" id="sign" class="headName" style="font-size: 18px">{{ student_message_editable.student_sign }}</label>
+        </div>
+    </div>
+</div>
+<div class="hidden-lg hidden-md hidden-sm" align="center" style="padding-top: 70px;width: 100%;height: 250px;background-image: url(../img/xjtu3.jpg);background-repeat:no-repeat; background-attachment: fixed;background-size: 100% 100%;">
+    <img src="{% static 'img/face_xjtu.jpg' %}" style="width: 80px;height: 80px;margin-bottom: 10px;" class="img-circle"><br>
+    <label name="netname" id="netnameOnPhone" class="headNameonPhone" style="font-size: 25px;">{{ student_message_editable.student_nickname }}</label>
+    <img src="{% static 'img/boy_black.png' %}" style="height: 25px;width: 25px;">
+    <br><label name="sign" id="signOnPhone" class="headNameonPhone" style="font-size: 18px">{{ student_message_editable.student_sign }}</label>
+</div>
+
+
+<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+    <div class="panel panel-danger" style="margin: 30px 30px;padding: 0px 0px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Ta的个人资料</h3>
+        </div>
+        <div class="panel-body" align="center">
+            <br><img src="{% static 'img/姓名.png' %}" height="15px" width="15px"><label class="selfinfo">&nbsp&nbsp姓名：</label><label class="selfinfo" name="name" id="name">{% ifequal message_contact.student_name_conceal 0%}不{% endifequal %}公开</label>
+            <br><img src="{% static 'img/电话.png' %}" height="15px" width="15px"><label class="selfinfo">&nbsp&nbsp电话：</label><label class="selfinfo" name="phone" id="phone">{% ifequal message_contact.student_contact_conceal 0%}不{% endifequal %}公开</label>
+            <br><img src="{% static 'img/boy_black.png' %}" height="15px" width="15px"><label class="selfinfo">&nbsp&nbsp性别：</label><label class="selfinfo" name="email" id="email">{% ifequal message_contact.student_sex_conceal 0%}不{% endifequal %}公开</label>
+
+        </div>
+    </div>
+
+    <div class="panel panel-danger" style="margin: 30px 30px;padding: 0px 0px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">荣誉总览</h3>
+        </div>
+        <div class="panel-body" align="center">
+            <br><img src="{% static 'img/总计.png' %}" height="15px" width="15px"><label class="selfinfo">&nbsp&nbsp总积分</label>
+            <br><img src="{% static 'img/奖杯.png' %}" height="15px" width="15px"><a href="javascript:window.scrollTo(0,450)" class="selfinfo">&nbsp&nbsp竞赛获奖</a>
+            <br><img src="{% static 'img/论文（导）.png' %}" height="15px" width="15px"><a href="javascript:window.scrollTo(0,530+document.getElementById('contestinfo').clientHeight)" class="selfinfo">&nbsp&nbsp论文</a>
+            <br><img src="{% static 'img/专利 (1).png' %}" height="15px" width="15px"><a href="javascript:window.scrollTo(0,710+document.getElementById('contestinfo').clientHeight+document.getElementById('magazinepaperinfo').clientHeight+document.getElementById('meetingpaperinfo').clientHeight)" class="selfinfo">&nbsp&nbsp专利</a>
+            <br><img src="{% static 'img/奖学金.png' %}" height="15px" width="15px"><a href="javascript:window.scrollTo(0,790+document.getElementById('contestinfo').clientHeight+document.getElementById('magazinepaperinfo').clientHeight+document.getElementById('meetingpaperinfo').clientHeight+document.getElementById('inventioninfo').clientHeight)" class="selfinfo">&nbsp&nbsp奖学金</a>
+            <br><img src="{% static 'img/社会经历.png' %}" height="15px" width="15px"><a href="javascript:window.scrollTo(0,880+document.getElementById('contestinfo').clientHeight+document.getElementById('magazinepaperinfo').clientHeight+document.getElementById('meetingpaperinfo').clientHeight+document.getElementById('inventioninfo').clientHeight+document.getElementById('scholarshipinfo').clientHeight)" class="selfinfo">&nbsp&nbsp社会经历</a>
+        </div>
+    </div>
+</div>
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12" style="padding: 20px 20px;">
+
+
+
+    <h2  align="center"><img src="{% static 'img/奖杯.png' %}" height="50px" width="50px">&nbsp&nbsp竞赛获奖</h2>
+    <table id="contestinfo" class="bordered table-responsive">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>竞赛名称</th>
+            <th>获奖级别</th>
+            <th>获奖等级</th>
+            <th>获奖时间</th>
+        </tr>
+        </thead>
+        {% for each in competitions %}
+        <tr>
+            <td>{{ each.id }}</td>
+            <td>{{ each.competition_name }}</td>
+            <td>{{ each.get_competition_competition_level_display}}</td>
+            <td>{{ each.competition_level }}</td>
+            <td>{{ each.honor_competition_get_time }}</td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+
+    <h2  class="sub-header" align="center"><img src="{% static 'img/论文（导）.png' %}" height="50px" width="50px">&nbsp&nbsp期刊论文</h2>
+    <table id="magazinepaperinfo" class="bordered table-responsive">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>论文名称</th>
+            <th>期刊名称</th>
+            <th>卷期号</th>
+            <th>起始页码</th>
+            <th>作者次序</th>
+            <th>发表时间</th>
+        </tr>
+        </thead>
+        {% for paper in paper_magazines %}
+        <tr>
+            <td>{{ paper.id }}</td>
+            <td>{{ paper.honor_paper_magazine_papername }}</td>
+            <td>{{ paper.honor_paper_magazine_magazinename }}</td>
+            <td>{{ paper.honor_paper_magazine_ISBNcode }}</td>
+            <td>{{ paper.honor_paper_magazine_page_begin }}</td>
+            <td>1</td>
+            <td>{{ paper.honor_paper_magazine_date_publish }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <h2 class="sub-header" align="center"><img src="{% static 'img/论文（导）.png' %}" height="50px" width="50px">&nbsp&nbsp会议论文</h2>
+    <table id="meetingpaperinfo" class="bordered table-responsive">
+        <thead>
+
+        <tr>
+            <th>序号</th>
+            <th>论文名称</th>
+            <th>会议名称</th>
+            <th>会议地点</th>
+            <th>会议时间</th>
+        </tr>
+
+        </thead>
+        {% for paper in paper_meetings %}
+        <tr>
+            <td>{{ paper.id }}</td>
+            <td>{{ paper.honor_paper_meeting_papername }}</td>
+            <td>{{ paper.honor_paper_meeting_meetingname }}</td>
+            <td>{{ paper.honor_paper_meeting_address }}</td>
+            <td>{{ paper.honor_paper_meeting_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <h2 class="sub-header" align="center"><img src="{% static 'img/专利 (1).png' %}" height="50px" width="50px">&nbsp&nbsp专利</h2>
+    <table id="inventioninfo" class="bordered table-responsive">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>专利名称</th>
+            <th>专利类别</th>
+            <th>专利号</th>
+            <th>授权时间</th>
+        </tr>
+        </thead>
+        {% for patent in patents%}
+        <tr>
+            <td>{{ patent.id }}</td>
+            <td>{{ patent.honor_patent_name }}</td>
+            <td>{{ patent.honor_patent_type }}</td>
+            <td>{{ patent.honor_patent_number }}</td>
+            <td>{{ patent.honor_patent_date_auth }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <h2  class="sub-header" align="center"><img src="{% static 'img/奖学金.png' %}" height="50px" width="50px">&nbsp&nbsp奖学金</h2>
+    <table id="scholarshipinfo" class="bordered table-responsive">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>奖学金名称</th>
+            <th>奖学金金额</th>
+            <th>授奖单位</th>
+            <th>获奖年度</th>
+        </tr>
+        </thead>
+        {% for scholarship in scholarships %}
+        <tr>
+            <td>{{ scholarship.id }}</td>
+            <td>{{ scholarship.honor_scholarship_name }}</td>
+            <td>{{ scholarship.honor_scholarship_moneyperyear }}</td>
+            <td>{{ scholarship.honor_scholarship_authority }}</td>
+            <td>{{ scholarship.honor_scholarship_year }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+
+    <h2  class="sub-header" align="center"><img src="{% static 'img/社会经历.png' %}" height="50px" width="50px">&nbsp&nbsp社会经历</h2>
+    <table id="experienceinfo" class="bordered table-responsive">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>活动名称</th>
+            <th>所在单位</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+        </tr>
+        </thead>
+        {% for experience in experiences %}
+
+        <tr>
+            <td>{{ experience.id }}</td>
+            <td>{{ experience.honor_experience_name }}</td>
+            <td>{{ experience.honor_experience_authority }}</td>
+            <td>{{ experience.honor_experience_start }}</td>
+            <td>{{ experience.honor_experience_end }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+
+</div>
+
+<footer class="col-lg-12 col-md-12 col-sm-12 col-xs-12 blog-footer" style="font-family: 幼圆;font-size: 15px;color: black;">
+    <p><a href="http://nskeylab.xjtu.edu.cn/site/lab/">西安交通大学网络安全实验室</a> All rights reserved &copy:2017.</p>
+    <p>
+        <a href="#top">返回顶部</a>
+    </p>
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/choseFile.js' %}"></script>
+</body>
+</html>

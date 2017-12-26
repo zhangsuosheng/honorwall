@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>荣誉墙个人中心(教师)</title>
+
+    <!-- Bootstrap -->
+      {% load static %}
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/teacher_center_competition.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">管理中心</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">返回主页</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul> -->
+            <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                <img class="" src="" alt="图标"/>
+                <!-- 用户登陆后用户名信息 -->
+                <p id="log-welcome-teacher">欢迎:  {% if request.cookie.username %}{{request.cookie.username}}{% else %}{{"加载错误"}}{% endif %}</p>
+                <button class="btn btn-info nav-btn" disabled>管理中心</button>
+                <button class="btn btn-info nav-btn" >返回主页</button>
+                <button id="teacher-logout"class="btn btn-danger nav-btn">登出</button>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="./checking">审核 <span class="sr-only">(current)</span></a></li>
+                
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./studentmessagechange">学生信息修改/查询</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./message_out">信息管理</a></li>
+                <li class="second"><a href="./message_out">&nbsp&nbsp&nbsp信息发布</a></li>
+                <li class="second"><a href="./message_outed">&nbsp&nbsp&nbsp已发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./letter_checked">审核推荐信</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./setting">设置</a></li>
+            </ul>
+        </div>
+        <!--页面其他部分的内容  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="dropdown hidden-lg hidden-md hidden-sm col-xs-12" align="center">
+                <button class="btn btn-warning btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    当前位置：审核
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+                    <li><a href="./checking">审核</a></li>
+                    <li><a href="./studentmessagechange">学生信息修改查询</a></li>
+                    <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+                    <li><a href="./message_out">信息发布</a></li>
+                    <li><a href="./message_outed">已发布信息</a></li>
+                    <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+                    <li><a href="./letter_checked">审核推荐信</a></li>
+                    <li><a href="./setting">设置</a></li>
+                </ul>
+            </div> 
+        </div>
+      </div>
+        <div class="col-sm-9 navbar-right" style="margin-right:4.5%">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                    href="#collapseOne">
+                    学生信息
+                </a>
+            </h4>
+        </div>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="stu_name">学生姓名</label>
+                <div class="col-sm-9">
+                    <input type="text" id="stu_name" class="form-control" value={{message.student.student_name}}  readonly/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="stu_id">学生学号</label>
+                <div class="col-sm-9">
+                    <input type="text" id="stu_id" class="form-control" value={{message.student.student_id}} readonly/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="stu_sex">学生性别</label>
+                <div class="col-sm-9">
+                    <input type="text" id="stu_sex" class="form-control" value= {% if message.student.student_sex %}{{"男"}}{% else %}{{"女"}}{% endif %} readonly/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="stu_field">学生专业班级</label>
+                <div class="col-sm-9">
+                    <input type="text" id="stu_field" class="form-control" value={{message.student.student_field}}{{message.student.student_classname}} readonly/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                        href="#collapseTwo">
+                        审核信息
+                    </a>
+                </h4>
+            </div>
+        </div>
+    <div id="collapseTwo" class="panel-collapse collapse in">
+        <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="magazine_class">期刊类别</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="magazine_class" value={{message.honor_paper_magazine_type}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="magazine_name">刊物名称</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="magazine_name" value={{message.honor_paper_magazine_magazinename}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="paper_name">文章名称</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="paper_name" value={{message.honor_paper_magazine_papername}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="paper_state">论文状态</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="paper_state" value={{message.honor_paper_magazine_status}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="begin_page">起始页码</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="begin_page" value={{message.honor_paper_magazine_page_begin}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="magzine_number_1">ISBN码或卷（期）</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="magzine_number_1" value={{message.honor_paper_magazine_ISBNcode}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="magzine_number_2">卷期号、页号</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="magzine_number_2" value={{message.honor_paper_magazine_page_number}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="paper_out_date">出版日期</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="paper_out_date" value={{message.honor_paper_magazine_date_publish}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="is_firstwriter">是否为通讯作者或第一作者</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="is_firstwriter" value={{message.honor_paper_magazine_is_firstauthor}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="quote_time">被引用次数</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="quote_time" value={{message.honor_paper_magazine_quotetimes}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="notice_number">影响因子数</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="notice_number" value={{message.honor_paper_magazine_impactfactors}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="state">检索收录情况</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="state" value={{message.honor_paper_magazine_searching}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="other_writer">其他作者</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="other_writer" value={{message.honor_paper_magazine_people}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="paper_message">论文摘要</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="paper_message" value={{message.honor_paper_magazine_abstract}}  readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="competition_file">证明材料</label>
+                    <div class="col-sm-9" >
+                        <button class="btn  btn-info" style="display:inline">下载</button><p id="file-name" style="display:inline;margin-left:10px">{% if message.honor_paper_magazine_confirm_file.name %}{{ message.honor_paper_magazine_confirm_file.name }}{% else %}{{ "无证明文件" }}{% endif %}</p>
+                    </div>
+                </div>
+          </form>
+    </div>
+</div>
+<div class="col-sm-9 navbar-right" style="margin-right:4.5%">
+<form class="form-horizontal">
+              <div class="form-group">
+                    <label class="col-sm-2 control-label" for="competition_point">审核状态</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="competition_point" value={% if message.is_checked %}{{ message.is_checked }}{% else %}{{ is_checked }} {% endif %} name="point" readonly/>
+                    </div>
+                </div>
+        </form>
+         <form class="form-horizontal" action={% if already %}"magazinepapersuccessid={% if message.id %}{{message.id}}{% else %}{{id}}{% endif %}already"{% endif %}{% if not already %}"magazinepapersuccessid={% if message.id %}{{message.id}}{% else %}{{id}}{% endif %}"{% endif %} method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                    <label class="col-sm-2 control-label" for="competition_point">荣誉积分</label>
+                    <div class="col-sm-9" >
+                        <input type="text" class="form-control" id="competition_point" value={{ message.honor_paper_magazine_point }} name="point"/>
+                    </div>
+                </div>
+              <div class="form-group">
+                <label></label>
+                <!-- 直接获取下一个的信息即可,标记状态不同    三个可以用同一个函数传参不同-->
+                <div style="text-align:center">
+                    <input type="submit" style="margin-right:10%" class="btn btn-lg btn-success"/>
+                    <a href={% if already %}"magazinepaperfailid={% if message.id %}{{message.id}}{% else %}{{id}}{% endif %}already"{% endif %}{% if not already %}"magazinepaperfailid={% if message.id %}{{message.id}}{% else %}{{id}}{% endif %}"{% endif %} class="btn btn-lg btn-danger" id="false-a">不通过</a>
+                </div>
+            </div>
+{% if already != "message" %}
+            <div class="form-group">
+                <label></label>
+                <div style="text-align:right">
+                    <!-- 直接获取下一个的信息即可 -->
+                    <a href={% if already %}"magazinepapernextid={% if message.id %}{{message.id}}{% else %}{{id}}{% endif %}already"{% endif %}{% if not already %}"magazinepapernextid={% if message.id %}{{message.id}}{% else %}{{id}}{% endif %}"{% endif %} class="btn btn-sm btn-info" style="margin-right:5%">下一个</a>
+                    <a class="btn btn-sm btn-default" href="./checking">返回</a>
+                </div>
+            </div>
+{% endif %}
+          </form>
+  </div>
+    </div>
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

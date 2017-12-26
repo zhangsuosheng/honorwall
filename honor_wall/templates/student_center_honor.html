@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>西安交通大学荣誉墙</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/site.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dispage.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <link href="{% static 'css/card.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.js' %}"></script>
+    <![endif]-->
+</head>
+<body class="container">
+<!--<header class="page-header">-->
+<!-- <h1>个人中心<small>Student Center</small></h1>-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">学生个人中心<small>Student Center</small></a>
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse ">
+            <form class="navbar-form  navbar-right hidden-xs">
+                    <a>欢迎：{{ userrelname }}</a>
+                    <a type="button" id="backToFront" class="btn btn-info nav-btn" href="{% url 'index' %}">返回主页</a>
+                    <a type="button" id="student_center" class="btn btn-info nav-btn"  disabled="disabled">我的个人中心</a>
+                    <a type="button" id="myHonorWall" class="btn btn-info nav-btn" href="{% url 'student_center_honorwall' %}">我的荣誉墙</a>
+                    <a type="button" id="logout" class="btn btn-danger nav-btn" href="{% url 'logout' %}">注销</a>
+            </form>
+                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
+                    <li><a>欢迎：{{ userrelname }}</a></li>
+                    <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                    <li class="active"><a href="">荣誉<span class="sr-only">(current)</span></a></li>
+                    <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                    <li><a href="{% url 'student_center_recommendation' %}">申请推荐信</a></li>
+                    <li><a href="{% url 'student_center_checking' %}">审核</a></li>
+                    <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                    <li><a href="{% url 'student_center_settings' %}">设置</a></li>
+                    <li><a href="./my_honorwall/1/">我的荣誉墙</a></li>
+                    <li><a href="{% url 'index' %}">返回主页</a></li>
+                    <li><a href="{% url 'logout' %}">注销</a></li>
+                </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                <li class="active"><a href="">荣誉<span class="sr-only">(current)</span></a></li>
+                <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                <li><a href="{% url 'student_center_recommendation' %}">申请推荐信</a></li>
+                <li><a href="{% url 'student_center_checking' %}">审核</a></li>
+                <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                <li><a href="{% url 'student_center_settings' %}">设置</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="sub-header">您已通过审核的荣誉</h2>
+            <br>
+            <div class="col-md-4">
+                <div class="small-card" align="center">
+                    <div class="scd-card-content">
+                        <img src="{% static 'img/奖杯.png' %}" height="35px" width="35px">
+                        <h3>竞赛</h3>
+                        <p>数量：{% if student_honorwall.student_competition_number == None %}0{% else %}{{ student_honorwall.student_competition_number }}{% endif %}</p>
+                        <p>总积分：{% if student_honorwall.student_competition_score == None %}0{% else %}{{ student_honorwall.student_competition_score }}{% endif %}</p>
+                        <p>排名：{{ student_honorwall.student_competition_rank }}</p>
+                </div>
+                    <a href="" class="button-white">查看排行榜</a>
+                </div>
+                <br>
+            </div>
+
+            <div class="col-md-4">
+                <div class="small-card" align="center">
+                    <div class="scd-card-content">
+                        <img src="{% static 'img/论文（导）.png' %}" height="35px" width="35px">
+                        <h3>论文</h3>
+                        <p>数量：{% if student_honorwall.student_paper_number == None %}0{% else %}{{ student_honorwall.student_paper_number }}{% endif %}</p>
+                        <p>总积分：{% if student_honorwall.student_paper_score == None %}0{% else %}{{ student_honorwall.student_paper_score }}{% endif %}</p>
+                        <p>排名：{{ student_honorwall.student_paper_rank }}</p>
+                    </div>
+                    <a href="" class="button-white">查看排行榜</a>
+                </div>
+                <br>
+            </div>
+
+            <div class="col-md-4">
+                <div class="small-card" align="center">
+                    <div class="scd-card-content">
+                        <img src="{% static 'img/专利%20(1).png' %}" height="35px" width="35px">
+                        <h3>专利</h3>
+                        <p>数量：{% if student_honorwall.student_patent_number == None %}0{% else %}{{ student_honorwall.student_patent_number }}{% endif %}</p>
+                        <p>总积分：{% if student_honorwall.student_patent_score == None %}0{% else %}{{ student_honorwall.student_patent_score }}{% endif %}</p>
+                        <p>排名：{{ student_honorwall.student_patent_rank }}</p>
+                    </div>
+                    <a href="" class="button-white">查看排行榜</a>
+                </div>
+                <br>
+            </div>
+
+            <div class="col-md-4">
+                <div class="small-card" align="center">
+                    <div class="scd-card-content">
+                        <img src="{% static 'img/奖学金.png' %}" height="35px" width="35px">
+                        <h3>奖学金</h3>
+                        <p>数量：{% if student_honorwall.student_scholarship_number == None %}0{% else %}{{ student_honorwall.student_scholarship_number }}{% endif %}</p>
+                        <p>总积分：{% if student_honorwall.student_scholarship_score == None %}0{% else %}{{ student_honorwall.student_scholarship_score }}{% endif %}</p>
+                        <p>排名：{{ student_honorwall.student_scholarship_rank }}</p>
+                    </div>
+                    <a href="" class="button-white">查看排行榜</a>
+                </div>
+                <br>
+            </div>
+
+            <div class="col-md-4">
+                <div class="small-card" align="center">
+                    <div class="scd-card-content">
+                        <img src="{% static 'img/社会经历.png' %}" height="35px" width="35px">
+                        <h3>社会经历</h3>
+                        <p>数量：{% if student_honorwall.student_experience_number == None %}0{% else %}{{ student_honorwall.student_experience_number }}{% endif %}</p>
+                        <p>总积分：{% if student_honorwall.student_experience_score == None %}0{% else %}{{ student_honorwall.student_experience_score }}{% endif %}</p>
+                        <p>排名：{{ student_honorwall.student_experience_rank }}</p>
+                    </div>
+                    <a href="" class="button-white">查看排行榜</a>
+                </div>
+                <br>
+            </div>
+
+            <div class="col-md-4">
+                <div class="small-card" align="center">
+                    <div class="scd-card-content">
+                        <img src="{% static 'img/总计.png' %}" height="35px" width="35px">
+                        <h3>总计</h3>
+                        <p id="num_sum">数量：XXX</p>
+                        <p id="score_sum">总积分：XXX</p>
+                        <p>排名：{{ student_honorwall.student_total_rank }}</p>
+                    </div>
+                    <script type="text/javascript">
+                        var num_sum={{ student_honorwall.student_experience_number }}+{{ student_honorwall.student_scholarship_number }}+{{ student_honorwall.student_patent_number }}+{{ student_honorwall.student_paper_number }}+{{ student_honorwall.student_competition_number }};
+                        document.getElementById("num_sum").innerHTML="数量："+num_sum;
+                        var score_sum={{ student_honorwall.student_experience_score }}+{{ student_honorwall.student_scholarship_score }}+{{ student_honorwall.student_patent_score }}+{{ student_honorwall.student_paper_score }}+{{ student_honorwall.student_competition_score }};
+                        document.getElementById("score_sum").innerHTML="总积分："+score_sum;
+                    </script>
+                    <a href="" class="button-white">查看排行榜</a>
+                </div>
+                <br>
+            </div>
+
+            <div class="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <br>
+                <table class="table table-striped" border="2">
+                    <thead>
+                    <tr>
+                        <th>荣誉编号</th>
+                        <th>荣誉名称</th>
+                        <td>类别</td>
+                        <th>获得时间</th>
+                        <th>积分</th>
+                        <th>审核时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for each in honor_competition %}
+                        {% if each.honor_competition_is_checked == 1 %}
+                            <tr>
+                            <td>
+                                {{ each.id }}
+                            </td>
+                            <td>
+                                {{ each.competition_name }}
+                            </td>
+                            <td>
+                                竞赛
+                            </td>
+                            <td>
+                                {{ each.honor_competition_get_time }}
+                            </td>
+                            <td>
+                                {{ each.honor_competition_point }}
+                            </td>
+                            <td>
+                               {{ each.honor_competition_check_time }}
+                            </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+
+                    {% for each in honor_magazine %}
+                        {% if each.honor_paper_magazine_is_checked == 1 %}
+                            <tr>
+                        <td>
+                            {{ each.id }}
+                        </td>
+                        <td>
+                            {{ each.honor_paper_magazine_papername }}
+                        </td>
+                            <td>
+                                期刊论文
+                            </td>
+                        <td>
+                            {{ each.honor_paper_magazine_date_publish }}
+                        </td>
+                        <td>
+                            {{ each.honor_paper_magazine_point }}
+                        </td>
+                        <td>
+                            {{ each.honor_paper_magazine_check_time }}
+                        </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+
+
+                    {% for each in honor_meeting %}
+                        {% if each.honor_paper_meeting_is_checked %}
+                            <tr>
+                        <td>
+                            {{ each.id }}
+                        </td>
+                        <td>
+                            {{ each.honor_paper_meeting_papername }}
+                        </td>
+                            <td>
+                                会议论文
+                            </td>
+                        <td>
+                            {{ each.honor_paper_meeting_date }}
+                        </td>
+                        <td>
+                            {{ each.honor_paper_meeting_point }}
+                        </td>
+                        <td>
+                            {{ each.honor_paper_meeting_check_time }}
+                        </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    {% for each in honor_patent %}
+                        {% if each.honor_patent_is_checked == 1 %}
+                            <tr>
+                        <td>
+                            {{ each.id }}
+                        </td>
+                        <td>
+                            {{ each.honor_patent_name }}
+                        </td>
+                            <td>
+                                专利
+                            </td>
+                        <td>
+                            {{ each.honor_patent_date_auth }}
+                        </td>
+                        <td>
+                            {{ each.honor_patent_point }}
+                        </td>
+                        <td>
+                            {{ each.honor_patent_check_time }}
+                        </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    {% for each in honor_scholarship %}
+                        {% if each.honor_scholarship_is_checked == 1 %}
+                            <tr>
+                        <td>
+                            {{ each.id }}
+                        </td>
+                        <td>
+                            {{ each.honor_scholarship_name }}
+                        </td>
+                            <td>
+                                奖学金
+                            </td>
+                        <td>
+                            {{ each.honor_scholarship_year }}
+                        </td>
+                        <td>
+                            {{ each.honor_scholarship_point }}
+                        </td>
+                        <td>
+                            {{ each.honor_scholarship_check_time }}
+                        </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    {% for each in honor_experience %}
+                        {% if each.honor_experience_is_checked == 1 %}
+                            <tr>
+                        <td>
+                            {{ each.id }}
+                        </td>
+                        <td>
+                            {{ each.honor_experience_name }}
+                        </td>
+                            <td>
+                                社会经历
+                            </td>
+                        <td>
+                            {{ each.honor_experience_start }}-{{ each.honor_experience_end }}
+                        </td>
+                        <td>
+                            {{ each.honor_experience_point }}
+                        </td>
+                        <td>
+                            {{ each.honor_experience_check_time }}
+                        </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <div>
+		            {% for each in contacts.object_list %}
+		            <p>{{each}}</p>
+		            {% endfor %}
+	            </div>
+
+                <div id="pagin" style="text-align:center;">
+                    <p>当前第{{ page }}页</p>
+                    <ul class="pagination">
+                    {% if contacts.has_previous %}
+                        <li>
+                        <a href="{% url 'dispage' contacts.previous_page_number %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for i in paper_list %}
+                        <li{% ifequal i page%} class="active"{% endifequal %}><a href="{% url 'dispage' i %}">{{ i }}</a></li>
+                    {% endfor %}
+
+
+                    {% if contacts.has_next %}
+                        <li>
+                  <a href="{% url 'dispage' contacts.next_page_number %}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center">
+    <span>西安交通大学网络安全实验室 All rights reserved &copy:2017</span>
+</footer>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+
+</body>
+</html>

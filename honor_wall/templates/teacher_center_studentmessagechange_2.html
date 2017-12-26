@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>荣誉墙个人中心(教师)</title>
+
+    <!-- Bootstrap -->
+      {% load static %}
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/teacher_center_competition.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrapSwitch.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a type="a" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="navbar-brand" href="#">管理中心</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">返回主页</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul> -->
+            <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                <img class="" src="" alt="图标"/>
+                <!-- 用户登陆后用户名信息 -->
+                <p id="log-welcome-teacher">欢迎XXX</p>
+                <a class="btn btn-info nav-btn" disabled>管理中心</a>
+                <a class="btn btn-info nav-btn" >返回主页</a>
+                <a id="teacher-logout"class="btn btn-danger nav-btn">登出</a>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="../checking">审核 <span class="sr-only">(current)</span></a></li>
+                
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="../studentmessagechange">学生信息修改/查询</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="../competitionadd">竞赛奖项设置添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="../message_out">信息管理</a></li>
+                <li class="second"><a href="../message_out">&nbsp&nbsp&nbsp信息发布</a></li>
+                <li class="second"><a href="../message_outed">&nbsp&nbsp&nbsp已发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="../lettergenerate">推荐信/简历批量生成</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="../letter_checked">审核推荐信</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="../setting">设置</a></li>
+            </ul>
+        </div>
+        <!--页面其他部分的内容  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="dropdown hidden-lg hidden-md hidden-sm col-xs-12" align="center">
+                <a class="btn btn-warning btn-block dropdown-toggle" type="a" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    当前位置：学生信息修改查询
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+                    <li><a href="../checking">审核</a></li>
+                    <li><a href="../studentmessagechange">学生信息修改查询</a></li>
+                    <li><a href="../competitionadd">竞赛奖项设置添加</a></li>
+                    <li><a href="../message_out">信息发布</a></li>
+                    <li><a href="../message_outed">已发布信息</a></li>
+                    <li><a href="../lettergenerate">推荐信/简历批量生成</a></li>
+                    <li><a href="../letter_checked">审核推荐信</a></li>
+                    <li><a href="../setting">设置</a></li>
+                </ul>
+            </div> 
+        </div>
+      </div>
+      <div class="col-sm-9 navbar-right" style="margin-right:4.5%">
+          <div  style="margin-right:4.5%">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                            href="#collapseOne" aria-expanded="true">
+                            学生信息
+                        </a>
+                    </h4>
+                </div>
+            </div>
+          <div id="collapseOne" aria-expanded="true" class="collapse in">
+          <form >
+                <div class="form-group" style="text-align:center">
+                    <div class="col-sm-3">
+                        <label for="name" style="float:left">姓名</label>
+                        <input type="text" id="name" placeholder="请输入姓名" class="form-control" value="{{ student.student_name }}"/>
+                    </div>
+                    <div class="col-sm-3">
+                    <label for="id" style="float:left">学号</label>
+                    <input type="text" id="id" placeholder="请输入学号" class="form-control"value="{{ student.student_id }}" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="sex" style="float:left">性别</label>
+                        <select id="sex" class="form-control">
+                            <option value=1 {% if student.student_sex == "男" %}selected="selected"{% endif %}>男</option>
+                            <option value=0 {% if student.student_sex == "女" %}selected="selected"{% endif %}>女</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="field" style="float:left">专业</label>
+                        <select id="field" class="form-control">
+                            <option value="null">请选择</option>
+                            <option {% if student.student_field == "计算机" %}selected="selected"{% endif %}>计算机</option>
+                            <option {% if student.student_field == "电子信息" %}selected="selected"{% endif %}>电子信息</option>
+                            <option {% if student.student_field == "自动化" %}selected="selected"{% endif %}>自动化</option>
+                            <option {% if student.student_field != "计算机" or student.student_field != "电子信息" or student.student_field != "自动化" %}{% endif %}value="other">其他</option>
+                        </select>
+                    </div>
+                    <label></label>
+                </div>
+                <div class="form-group" style="text-align:center">
+                <label></label>
+                    <div class="col-sm-3">
+                        <label for="grade" style="float:left">年级</label>
+                        <select id="grade" class="form-control">
+                                <option value="null">请选择</option>
+                                <option {% if student.student_grade == 2017 %}selected="selected"{% endif %}>2017</option>
+                                <option {% if student.student_grade == 2016 %}selected="selected"{% endif %}>2016</option>
+                                <option {% if student.student_grade == 2015 %}selected="selected"{% endif %}>2015</option>
+                                <option {% if student.student_grade == 2014 %}selected="selected"{% endif %}>2014</option>
+                            </select>
+                    </div>
+
+                    <div class="col-sm-3">
+                    <label for="classroom" style="float:left">班级</label>
+                    <select id="classroom" class="form-control">
+                        <option value="null">请选择</option>
+                            <option {% if student.student_classname == 71 %}selected="selected"{% endif %}>71</option>
+                            <option {% if student.student_classname == 72 %}selected="selected"{% endif %}>72</option>
+                            <option {% if student.student_classname == 73 %}selected="selected"{% endif %}>73</option>
+                            <option {% if student.student_classname == 74 %}selected="selected"{% endif %}>74</option>
+                            <option {% if student.student_classname == 75 %}selected="selected"{% endif %}>75</option>
+                            <option {% if student.student_classname == 76 %}selected="selected"{% endif %}>76</option>
+                            <option {% if student.student_classname == 77 %}selected="selected"{% endif %}>77</option>
+                            <option {% if student.student_classname == 78 %}selected="selected"{% endif %}>78</option>
+                            <option {% if student.student_classname == 79 %}selected="selected"{% endif %}>79</option>
+                            <option {% if student.student_classname == 710 %}selected="selected"{% endif %}>710</option>
+                            <option {% if student.student_classname == 711 %}selected="selected"{% endif %}>711</option>
+                            <option {% if student.student_classname == 712 %}selected="selected"{% endif %}>712</option>
+                            <option {% if student.student_classname == 61 %}selected="selected"{% endif %}>61</option>
+                            <option {% if student.student_classname == 62 %}selected="selected"{% endif %}>62</option>
+                            <option {% if student.student_classname == 63 %}selected="selected"{% endif %}>63</option>
+                            <option {% if student.student_classname == 64 %}selected="selected"{% endif %}>64</option>
+                            <option {% if student.student_classname == 65 %}selected="selected"{% endif %}>65</option>
+                            <option {% if student.student_classname == 66 %}selected="selected"{% endif %}>66</option>
+                            <option {% if student.student_classname == 65 %}selected="selected"{% endif %}>67</option>
+                            <option {% if student.student_classname == 68 %}selected="selected"{% endif %}>68</option>
+                            <option {% if student.student_classname == 69 %}selected="selected"{% endif %}>69</option>
+                            <option {% if student.student_classname == 610 %}selected="selected"{% endif %}>610</option>
+                            <option {% if student.student_classname == 611 %}selected="selected"{% endif %}>611</option>
+                            <option {% if student.student_classname == 612 %}selected="selected"{% endif %}>612</option>
+                            <option {% if student.student_classname == 51 %}selected="selected"{% endif %}>51</option>
+                            <option {% if student.student_classname == 52 %}selected="selected"{% endif %}>52</option>
+                            <option {% if student.student_classname == 53 %}selected="selected"{% endif %}>53</option>
+                            <option {% if student.student_classname == 54 %}selected="selected"{% endif %}>54</option>
+                            <option {% if student.student_classname == 55 %}selected="selected"{% endif %}>55</option>
+                            <option {% if student.student_classname == 56 %}selected="selected"{% endif %}>56</option>
+                            <option {% if student.student_classname == 57 %}selected="selected"{% endif %}>57</option>
+                            <option {% if student.student_classname == 58 %}selected="selected"{% endif %}>58</option>
+                            <option {% if student.student_classname == 59 %}selected="selected"{% endif %}>59</option>
+                            <option {% if student.student_classname == 510 %}selected="selected"{% endif %}>510</option>
+                            <option {% if student.student_classname == 511 %}selected="selected"{% endif %}>511</option>
+                            <option {% if student.student_classname == 512 %}selected="selected"{% endif %}>512</option>
+                            <option {% if student.student_classname == 41 %}selected="selected"{% endif %}>41</option>
+                            <option {% if student.student_classname == 42 %}selected="selected"{% endif %}>42</option>
+                            <option {% if student.student_classname == 43 %}selected="selected"{% endif %}>43</option>
+                            <option {% if student.student_classname == 44 %}selected="selected"{% endif %}>44</option>
+                            <option {% if student.student_classname == 45 %}selected="selected"{% endif %}>45</option>
+                            <option {% if student.student_classname == 46 %}selected="selected"{% endif %}>46</option>
+                            <option {% if student.student_classname == 47 %}selected="selected"{% endif %}>47</option>
+                            <option {% if student.student_classname == 48 %}selected="selected"{% endif %}>48</option>
+                            <option {% if student.student_classname == 49 %}selected="selected"{% endif %}>49</option>
+                            <option {% if student.student_classname == 410 %}selected="selected"{% endif %}>410</option>
+                            <option {% if student.student_classname == 411 %}selected="selected"{% endif %}>411</option>
+                            <option {% if student.student_classname == 412 %}selected="selected"{% endif %}>412</option>
+                        </select>
+                    </select>
+                    <label></label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="faculty"  style="float:left">院系</label>
+                        <input type="text" id="faculty" placeholder="请输入院系" class="form-control" value="{{ student.student_faculty }}" />
+                    </div>
+                    <div class="col-sm-3" style="float:left;margin-top: 30px;">
+                    <label for="state" style="float:left" class="success">账号冻结</label>
+                    <!-- 点击的时候confirm一下提示一下 -->
+                    <div id="state" class="switch switch-small" tabindex="0">
+                        <input id="notification1" type="checkbox" />
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group" style="text-align:center;margin-top: 75px;">
+                    <label></label>
+                    <div class="col-sm-3">
+                        <label for="nickname"  style="float:left">昵称</label>
+                        <input type="text" id="nickname" placeholder="请输入昵称" class="form-control" value="{{ student_edit.student_nickname}}" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="political"  style="float:left">政治面貌</label>
+                        <input type="text" id="political" placeholder="请输入政治面貌" class="form-control" value="{{ student_edit.student_political_state}}" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="people"  style="float:left">民族</label>
+                        <input type="text" id="people" placeholder="请输入民族" class="form-control" value="{{ student_edit.student_people}}" />
+                    </div>
+                </div>
+                <div class="form-group" style="text-align:center">
+                </div>
+                <div class="form-group" style="width: 400px;">
+                    <label></label>
+                        <a class="btn btn-success navbar-right" style="margin-top:25px;" id="delete-button">撤销修改</a>
+                        <a class="btn btn-success" style="margin-top:25px;" id="confirm-button">确认修改</a>
+                </div>
+          <div id="state_id" style="display: none">{{ student.student_state }}</div>
+          </form>
+          </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                            href="#collapseTwo" aria-expanded="true">
+                            荣誉信息记录
+                        </a>
+                    </h4>
+                </div>
+            </div>
+          <div style="margin-right:4.5%" id="collapseTwo" class="collapse in" aria-expanded="true">
+          <table style="" class="table table-striped table-bordered table-condensed" >
+              <thead>
+                  <tr class="info">
+                      <th>序号</th>
+                      <th>类别</th>
+                      <th>名称</th>
+                      <th>提交时间</th>
+                      <th>状态</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for me in message  %}
+                    <tr {% if me.state == "审核通过" %}class="success"{% elif me.state == "审核不通过" %}class="danger"{% elif me.state == "正在审核" %}class="info" {% elif me.state == "未审核" %}{% endif %}>
+                        <th>{{me.id}}</th>
+                        <th>{{me.class}}</th>
+                        <th>{{me.name}}</th>
+                        <th>{{me.time}}</th>
+                        <th><a onclick="javascript:window.open('{% if me.class == "竞赛" %}../competitionid={{ me.id }}message{% elif me.class == "期刊论文" %}../magazinepaperid={{ me.id }}message{% elif me.class == "会议论文" %}../meetingpaperid={{ me.id }}message{% elif me.class == "专利" %}../patentid={{ me.id }}message{% elif me.class == "奖学金" %}../prizeid={{ me.id }}message{% elif me.class == "社会经历" %}../experienceid={{ me.id }}message{% endif %}')"  class="btn btn-warning">{{ me.state }}</a></th>
+                    </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+      </div>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrapSwitch.js' %}"></script>
+    <script src="{% static 'js/csrf.js' %}"></script>
+    <script src="{% static 'js/studentmessagechange_2.js' %}"></script>
+  </body>
+</html>

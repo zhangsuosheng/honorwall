@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>西安交通大学荣誉墙</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/site.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.js' %}"></script>
+    <![endif]-->
+</head>
+<body class="container">
+<!--<header class="page-header">-->
+<!-- <h1>个人中心<small>Student Center</small></h1>-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">学生个人中心<small>Student Center</small></a>
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse ">
+            <form class="navbar-form  navbar-right hidden-xs">
+                    <a>欢迎：{{ userrelname }}</a>
+                    <a type="button" id="backToFront" class="btn btn-info nav-btn" href="{% url 'index' %}">返回主页</a>
+                    <a type="button" id="student_center" class="btn btn-info nav-btn"  disabled="disabled">我的个人中心</a>
+                    <a type="button" id="myHonorWall" class="btn btn-info nav-btn" href="{% url 'student_center_honorwall' %}">我的荣誉墙</a>
+                    <a type="button" id="logout" class="btn btn-danger nav-btn" href="{% url 'logout' %}">注销</a>
+            </form>
+                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
+                    <li><a>欢迎：{{ userrelname }}</a></li>
+                    <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                    <li><a href="{% url 'student_center_honor' %}">荣誉</a></li>
+                    <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                    <li class="active"><a href="">申请推荐信<span class="sr-only">(current)</span></a></li>
+                    <li><a href="{% url 'student_center_checking' %}">审核</a></li>
+                    <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                    <li><a href="{% url 'student_center_settings' %}">设置</a></li>
+                    <li><a href="./my_honorwall/1/">我的荣誉墙</a></li>
+                    <li><a href="{% url 'index' %}">返回主页</a></li>
+                    <li><a href="{% url 'logout' %}">注销</a></li>
+                </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                <li><a href="{% url 'student_center_honor' %}">荣誉</a></li>
+                <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                <li class="active"><a href="">申请推荐信<span class="sr-only">(current)</span></a></li>
+                <li><a href="{% url 'student_center_checking' %}">审核</a></li>
+                <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                <li><a href="{% url 'student_center_settings' %}">设置</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="sub-header">申请推荐信</h2>
+            <span>注意：申请成功后电子版推荐信将于3-5个工作日内发送到您的邮箱中，如需纸质版推荐信请于申请成功后到西一楼XXX办理！</span>
+
+            <form action="/student/recommendation" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <br>
+                    <label for="stu_employer">所要申请的单位：</label>
+                    <input name="company" class="form-control" id="stu_employer">
+                </div>
+                <div class="form-group">
+                    <label for="stu_position">所要申请的项目/专业/职位：</label>
+                    <input name="position" class="form-control" id="stu_position">
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input name="paper" type="checkbox" id="stu_needpaper"> 是否需要纸质版推荐信(打勾表示需要）
+                    </label>
+                </div>
+                <p class="help-block">Q：为什么要申请才能拿到推荐信？</p>
+                <p class="help-block">A：学校需要审查学生是否有违规违纪记录，还需要根据学生学分成绩、荣誉积分不同生成不同的推荐信。</p>
+                <div align="center">
+                    <button type="submit" class="btn btn-primary" style="width: 200px;">提交申请</button></div>
+            </form>
+            <h2 class="sub-header">审核记录</h2>
+            <div class="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table class="table table-striped" border="2">
+                    <tr>
+                        <td>
+                           申请单位
+                        </td>
+                        <td>
+                            所申请的项目/专业/职位
+                        </td>
+                        <td>
+                            申请时间
+                        </td>
+                        <td>
+                            审核状态
+                        </td>
+                    </tr>
+                    {% for each in apply_record %}
+                        <tr>
+                            <td>{{ each.company }}</td>
+                            <td>{{ each.position }}</td>
+                            <td>{{ each.date }}</td>
+                            <td>{% if each.checked == 1 %}审核通过，已发送邮件到您的邮箱{% elif each.checked == 0 %}等待审核{% elif each.checked == -1 %}审核失败{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center">
+    <span>西安交通大学网络安全实验室 All rights reserved &copy:2017</span>
+</footer>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>西安交通大学荣誉墙</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/site.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.js' %}"></script>
+    <![endif]-->
+</head>
+<body class="container">
+<!--<header class="page-header">-->
+<!-- <h1>个人中心<small>Student Center</small></h1>-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">学生个人中心<small>Student Center</small></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse ">
+            <form class="navbar-form  navbar-right hidden-xs">
+                    <a>欢迎：{{ userrelname }}</a>
+                    <a type="button" id="backToFront" class="btn btn-info nav-btn" href="{% url 'index' %}">返回主页</a>
+                    <a type="button" id="student_center" class="btn btn-info nav-btn"  disabled="disabled">我的个人中心</a>
+                    <a type="button" id="myHonorWall" class="btn btn-info nav-btn" href="{% url 'student_center_honorwall' %}">我的荣誉墙</a>
+                    <a type="button" id="logout" class="btn btn-danger nav-btn" href="{% url 'logout' %}">注销</a>
+            </form>
+                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
+                    <li><a>欢迎：{{ userrelname }}</a></li>
+                    <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                    <li><a href="{% url 'student_center_honor' %}">荣誉</a></li>
+                    <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                    <li><a href="{% url 'student_center_recommendation' %}">申请推荐信</a></li>
+                    <li class="active"><a href="">审核<span class="sr-only">(current)</span></a></li>
+                    <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                    <li><a href="{% url 'student_center_settings' %}">设置</a></li>
+                    <li><a href="./my_honorwall/1/">我的荣誉墙</a></li>
+                    <li><a href="{% url 'index' %}">返回主页</a></li>
+                    <li><a href="{% url 'logout' %}">注销</a></li>
+                </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                 <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                    <li><a href="{% url 'student_center_honor' %}">荣誉</a></li>
+                    <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                    <li><a href="{% url 'student_center_recommendation' %}">申请推荐信</a></li>
+                    <li class="active"><a href="">审核<span class="sr-only">(current)</span></a></li>
+                    <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                    <li><a href="{% url 'student_center_settings' %}">设置</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#A" data-toggle="tab">竞赛奖项审核</a></li>
+                <li><a href="#B" data-toggle="tab">期刊论文审核</a></li>
+                <li><a href="#C" data-toggle="tab">会议论文审核</a></li>
+                <li><a href="#D" data-toggle="tab">专利审核</a></li>
+                <li><a href="#E" data-toggle="tab">奖学金审核</a></li>
+                <li><a href="#F" data-toggle="tab">社会经历审核</a></li>
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+
+                <div class="tab-pane fade in active" id="A">
+                    <h3>竞赛奖项</h3>
+                    <div class="hidden-lg hidden-md hidden-sm col-xs-12">
+                        <p class="help-block" style="font-size: large">e.g. 填写示例<br><br>竞赛名称：大学生数学建模竞赛<br><br>竞赛级别：校级<br><br>获奖级别：一等奖<br><br>获奖时间：2017/6/1<br><br>授奖单位：西安交通大学<br><br></p>
+                    </div>
+                    <form id="form_contest" action="/student/checking/contest" method="POST" enctype="multipart/form-data" class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="stu_honorname_contest">竞赛名称：</label>
+                            <select name="name" id="stu_honorname_contest" class="form-control" onchange="javascript:showothers(others_honorname_contest,this.value);">
+                                <option value="null">—— 请选择 ——</option>
+                                <option>全国大学生电子设计竞赛</option>
+                                <option>中国大学生数学建模竞赛</option>
+                                <option>美国大学生数学建模竞赛</option>
+                                <option>西安交通大学大学生数学建模竞赛</option>
+                                <option>ACM国际大学生程序设计竞赛</option>
+                                <option>全国大学生信息安全竞赛</option>
+                                <option>全国大学生机械创新设计大赛</option>
+                                <option>全国青少年科技创新大赛</option>
+                                <option>中国机器人大赛（暨RoboCup中国公开赛）</option>
+                                <option>Robocon全国大学生机器人大赛</option>
+                                <option>Robomasters全国大学生机器人大赛</option>
+                                <option>“互联网+”全国大学生创新创业大赛</option>
+                                <option>“挑战杯”全国大学生课外学术科技作品竞赛</option>
+                                <option>“创青春”全国大学生创业大赛</option>
+                                <option>中国大学生物理学术竞赛</option>
+                                <option>全国周培源大学生力学竞赛</option>
+                                <option>全国大学生“飞思卡尔”杯智能汽车竞赛</option>
+                                <option>全国大学生节能减排社会实践与科技竞赛</option>
+                                <option value="others">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="others_honorname_contest" style="display: none;">
+                            <label>请填写您的竞赛名称：</label>
+                            <input name="name_others" id="name_others" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_honorlevel_contest">获奖级别：</label>
+                            <select name="grade" id="stu_honorlevel_contest" class="form-control" onchange="javascript:showothers(others_honorlevel_contest,this.value);">
+                                <option value="null">—— 请选择 ——</option>
+                                <option value="1">国际级</option>
+                                <option value="2">国家级</option>
+                                <option value="3">西北赛区级</option>
+                                <option value="4">省级</option>
+                                <option value="5">校级</option>
+                                <option value="6">这个比赛不分级</option>
+                                <option value="others">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="others_honorlevel_contest" style="display: none;">
+                            <label>请填写您的获奖级别：</label>
+                            <input name="grade_others" id="grade_others" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_honorlevel_contest">获奖等级：</label>
+                            <select name="level" id="stu_honorprice_contest" class="form-control" onchange="javascript:showothers(others_honorprice_contest,this.value);">
+                                <option value="null">—— 请选择 ——</option>
+                                <option>一等奖</option>
+                                <option>二等奖</option>
+                                <option>三等奖</option>
+                                <option>特等奖</option>
+                                <option>金牌</option>
+                                <option>银牌</option>
+                                <option>铜牌</option>
+                                <option value="others">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="others_honorprice_contest" style="display: none;">
+                            <label>请填写您的获奖等级名称：</label>
+                            <input name="level_others" id="level_others" class="form-control">
+                        </div>
+
+                        <div class="has-feedback form-group">
+                            <label class="control-label" for="stu_honortime_contest"><span>获奖时间（只知道年和月的话就填该年该月的1号）：</span></label>
+                            <input name="time" id="stu_honortime_contest" type="date" class="form-control">
+                        </div>
+
+                        <div class="has-feedback form-group">
+                            <label class="control-label" for="stu_honorfrom_contest"><span>指导教师：</span></label>
+                            <input name="teacher" id="stu_teacher_contest" class="form-control">
+                        </div>
+
+                        <div class="has-feedback form-group">
+                            <label class="control-label" for="stu_honorfrom_contest"><span>授奖单位：</span></label>
+                            <input name="company" id="stu_honorfrom_contest" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>备注信息：</label>
+                            <textarea name="info" class="form-control" rows="3" id="stu_remarking_contest"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_provefile_contest">证明材料（请上传压缩包）：</label>
+                            <br>
+                            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                <button class="btn btn-info" type="button">上传</button>
+                                <input name="file" type="file" id="stu_provefile_contest" onchange="javascript:upload_stu_provefile(this.files[0],filename_contest);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                            </div>
+                            <span id="filename_contest" style="vertical-align: middle">未上传文件</span>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <button type="button" onclick="submit_contest()" class="btn btn-primary btn-block" id="stu_submit_contest">提交审核</button>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+
+                    </form>
+                    <div class="hidden-xs col-lg-1 col-md-1 col-sm-1"></div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs">
+                        <p class="help-block" style="font-size: large"><br>e.g. 填写示例<br><br>竞赛名称：西安交通大学大学生数学建模竞赛<br><br>竞赛级别：校级<br><br>获奖级别：一等奖<br><br>获奖时间：2017/6/1<br><br>授奖单位：西安交通大学<br></p>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function submit_contest() {
+                        var name=document.getElementById("stu_honorname_contest")
+                        var grade=document.getElementById("stu_honorlevel_contest")
+                        var level=document.getElementById("stu_honorprice_contest")
+                        if(name.value=="others"){
+                            name.value=document.getElementById("name_others").value;
+                        }
+                        if(grade.value=="others"){
+                            grade.value=document.getElementById("grade_others").value;
+                        }
+                        if(level.value=="others"){
+                            level.value=document.getElementById("level_others".value);
+                        }
+                        document.getElementById("form_contest").submit();
+                    }
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="tab-pane fade" id="B">
+                    <h3>期刊论文</h3>
+                    <form id="form_magazine" action="/student/checking/magazine" method="POST" enctype="multipart/form-data" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="stu_qklb_magazinepaper">期刊类别：</label>
+                            <select name="type" id="stu_qklb_magazinepaper" class="form-control">
+                                <option value="null">—— 请选择 ——</option>
+                                <option>TOP学术期刊</option>
+                                <option>SCI收录学术期刊</option>
+                                <option>SSC收录学术期刊</option>
+                                <option>EI收录学术期刊</option>
+                                <option>国内一级学术期刊</option>
+                                <option>国内核心学术期刊</option>
+                                <option>其他期刊</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>刊物名称：</label>
+                            <input name="magainename" class="form-control" id="stu_magazinename_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label>文章名称：</label>
+                            <input name="papername" class="form-control" id="stu_papername_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_paperstatus_magazinepaper">论文状态：</label>
+                            <select name="status" id="stu_paperstatus_magazinepaper" class="form-control">
+                                <option value="null">—— 请选择 ——</option>
+                                <option>已录用，尚未刊出</option>
+                                <option>已录用，已刊出</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>起始页码：</label>
+                            <input name="page" type="number" class="form-control" id="stu_paperpage_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label>ISBN码或卷（期）：</label>
+                            <input name="ISBN" class="form-control" id="stu_ISBNcode_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label>卷期号、页号：</label>
+                            <input name="volume" class="form-control" id="stu_termcode_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="stu_publicdate_magezinepaper"><span>出版日期：</span></label>
+                            <input name="time" id="stu_publicdate_magezinepaper" type="date" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_iffirst_magazinepaper">是否为通讯作者或第一作者：</label>
+                            <select name="firstauthor" id="stu_iffirst_magazinepaper" class="form-control">
+                                <option value="null">—— 请选择 ——</option>
+                                <option value="True">是</option>
+                                <option value="False">否</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>被引用次数：</label>
+                            <input name="usetimes" type="number" class="form-control" id="stu_quotetimes_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label>影响因子数：</label>
+                            <input name="impact" type="number" class="form-control" id="stu_impactfactors_magazinepaper">
+                        </div>
+
+                        <div class="form-group">
+                            <label>检索收录情况(300字以内）：</label>
+                            <textarea name="usinginfo" class="form-control" rows="3" id="stu_searching_magazinepaper"></textarea>
+                        </div>
+
+                        <div class="form-group" id="stu_otherauthors_magazinepaper">
+                            <label>其他作者：</label>
+                            <input name="otherauthors" type="text" id="otherauthors" style="display: none">
+                            <button type="button" class="btn btn-info" id="stu_addotherauthors_magazinepaper" onclick="javascript:addauthor(this,stu_newauthor_magazinepaper)">添加</button>
+                                <div class="form-inline form-group" id="stu_newauthor_magazinepaper" style="display: none;margin-left: 30px;margin-top: 10px;" align="center">
+                                    <span>作者姓名：</span><input type="text" class="form-control" id="stu_newauthorname_magezinepaper"><br><br>
+                                    <span>作者位序：</span><input type="number" class="form-control" id="stu_newauthororder_magazinepaper"><br><br>
+                                    <button type="button" class="btn btn-info" style="width: 200px" onclick="javascript:createlabel(stu_newauthorname_magezinepaper,stu_newauthororder_magazinepaper)">确认添加</button>
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>论文摘要（1000字以内）：</label>
+                            <textarea name="quto" class="form-control" rows="6" id="stu_abstract_magazinepaper"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_provefile_magazinepaper">证明材料（请上传压缩包）：</label>
+                            <br>
+                            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                <button class="btn btn-info fileinput-button" type="button">上传</button>
+                                <input name="file" type="file" id="stu_provefile_magazinepaper" onchange="javascript:loadFile(this.files[0],filename_magazinepaper);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                            </div>
+                            <span id="filename_magazinepaper" style="vertical-align: middle">未上传文件</span>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <button type="button" onclick="submit_magazine()" class="btn btn-primary btn-block" id="stu_submit_magazinepaper">提交审核</button>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+
+                    </form>
+                </div>
+                <script type="text/javascript">
+                    function submit_magazine() {
+                        var str="";
+                        for(i=1;i<=num;i++){
+                            str=str+document.getElementById("stu_otherauthor"+i+"_magazinepaper").innerHTML;
+                            alert(str);
+                        }
+                        document.getElementById("otherauthors").value=str;
+                        alert(document.getElementById("otherauthors").value);
+                        document.getElementById("form_magazine").submit();
+                    }
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="tab-pane fade" id="C">
+                    <h3>高水平学术会议论文</h3>
+                    <form id="form_meeting" action="/student/checking/meeting" method="POST" enctype="multipart/form-data" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="stu_lwlb_meeting">会议类别：</label>
+                            <select name="type" id="stu_lwlb_meeting" class="form-control">
+                                <option value="null">—— 请选择 ——</option>
+                                <option>国际大会特邀报告</option>
+                                <option>国际分组报告或展示</option>
+                                <option>国内大会特邀报告</option>
+                                <option>国内分组报告或展示</option>
+                                <option>IEEE认定的国际会议</option>
+                                <option>一般性国际会议</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>会议名称：</label>
+                            <input name="meetingname" class="form-control" id="stu_meetingname_meeting">
+                        </div>
+                        <div class="form-group">
+                            <label>文章名称：</label>
+                            <input name="papername" class="form-control" id="stu_papername_meeting">
+                        </div>
+                        <div class="form-group">
+                            <label>会议地址：</label>
+                            <input name="address" class="form-control" id="stu_meetingplace_meeting">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="stu_meetingdate_meeting"><span>会议日期：</span></label>
+                            <input name="date" id="stu_meetingdate_meeting" type="date" class="form-control">
+                        </div>
+
+                        <div class="form-group" id="stu_otherauthors_meeting">
+                            <label>其他作者：</label>
+                            <input name="otherauthors" type="text" id="otherauthors_meeting" style="display: none">
+                            <button type="button" class="btn btn-info" id="stu_addotherauthors_meeting" onclick="javascript:addauthor(this,stu_newauthor_meeting)">添加</button>
+                                <div class="form-inline form-group" id="stu_newauthor_meeting" style="display: none;margin-left: 30px;margin-top: 10px;" align="center">
+                                    <span>作者姓名：</span><input type="text" class="form-control" id="stu_newauthorname_meeting"><br><br>
+                                    <span>作者位序：</span><input type="number" class="form-control" id="stu_newauthororder_meeting"><br><br>
+                                    <button type="button" class="btn btn-info" style="width: 200px" onclick="javascript:createlabelformeeting(stu_newauthorname_meeting,stu_newauthororder_meeting)">确认添加</button>
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_iffirst_meeting">是否为通讯作者或第一作者：</label>
+                            <select name="firstauthor" id="stu_iffirst_meeting" class="form-control">
+                                <option value="null">—— 请选择 ——</option>
+                                <option value="True">是</option>
+                                <option value="False">否</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stu_provefile_meeting">证明材料（请上传压缩包）：</label>
+                            <br>
+                            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                <button class="btn btn-info fileinput-button" type="button">上传</button>
+                                <input name="file" type="file" id="stu_provefile_meeting" onchange="javascript:loadFile(this.files[0],filename_meeting);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                            </div>
+                            <span id="filename_meeting" style="vertical-align: middle">未上传文件</span>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <button type="button" class="btn btn-primary btn-block" onclick="submit_meeting()">提交审核</button>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+
+                    </form>
+                </div>
+                <script type="text/javascript">
+                    function submit_meeting() {
+                        var str="";
+                        for(i=1;i<=num;i++){
+                            str=str+document.getElementById("stu_otherauthor"+i+"_meeting").innerHTML;
+                            alert(str);
+                        }
+                        document.getElementById("otherauthors_meeting").value=str;
+                        alert(document.getElementById("otherauthors_meeting").value);
+                        document.getElementById("form_meeting").submit();
+                    }
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="tab-pane fade" id="D">
+                                    <h3>专利</h3>
+
+                                    <form id="form_patent" action="/student/checking/patent" method="POST" enctype="multipart/form-data" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="stu_zllb_patent">专利类别：</label>
+                                            <select name="type" id="stu_zllb_patent" class="form-control">
+                                                <option value="null">—— 请选择 ——</option>
+                                                <option>发明专利</option>
+                                                <option>实用新型专利</option>
+                                                <option>国际发明专利（美日欧）</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>专利名称：</label>
+                                            <input name="name" class="form-control" id="stu_patentname_patent">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>专利（申请）号：</label>
+                                            <input name="number" class="form-control" id="stu_patentnum_patent">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="stu_applydate_patent"><span>申请日期：</span></label>
+                                            <input name="applydate" id="stu_applydate_patent" type="date" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="stu_passdate_patent"><span>授权日期：</span></label>
+                                            <input name="passdate" id="stu_passdate_patent" type="date" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="stu_lawstatus_meeting">法律状态：</label>
+                                            <select name="status" id="stu_lawstatus_meeting" class="form-control">
+                                                <option value="null">—— 请选择 ——</option>
+                                                <option>已授权专利</option>
+                                                <option>已公开专利申请</option>
+                                                <option>未公开专利申请</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="stu_iffirst_patent">是否为第一发明人：</label>
+                                            <select name="firstauthor" id="stu_iffirst_patent" class="form-control">
+                                                <option value="null">—— 请选择 ——</option>
+                                                <option value="True">是</option>
+                                                <option value="False">否</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" id="stu_otherauthors_patent">
+                                            <label>其他发明人：</label>
+                                            <input name="otherauthors" id="otherauthors_patent" style="display: none">
+                                            <button type="button" class="btn btn-info" id="stu_addotherauthors_patent" onclick="javascript:addauthor(this,stu_newauthor_patent)">添加</button>
+                                            <div class="form-inline form-group" id="stu_newauthor_patent" style="display: none;margin-left: 30px;margin-top: 10px;" align="center">
+                                                <span>发明人姓名：</span><input type="text" class="form-control" id="stu_newauthorname_patent"><br><br>
+                                                <span>发明人位序：</span><input type="number" class="form-control" id="stu_newauthororder_patent"><br><br>
+                                                <button type="button" class="btn btn-info" style="width: 200px" onclick="javascript:createlabelforpatent(stu_newauthorname_patent,stu_newauthororder_patent)">确认添加</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="stu_provefile_patent">证明材料（请上传压缩包）：</label>
+                                            <br>
+                                            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                                <button class="btn btn-info fileinput-button" type="button">上传</button>
+                                                <input name="file" type="file" id="stu_provefile_patent" onchange="javascript:loadFile(this.files[0],filename_patent);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                                            </div>
+                                            <span id="filename_patent" style="vertical-align: middle">未上传文件</span>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                            <button type="button" class="btn btn-primary btn-block" onclick="submit_patent()">提交审核</button>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                                    </form>
+                                </div>
+                <script type="text/javascript">
+                    function submit_patent() {
+                        var str="";
+                        for(i=1;i<=num;i++){
+                            str=str+document.getElementById("stu_otherauthor"+i+"_patent").innerHTML;
+                            alert(str);
+                        }
+                        document.getElementById("otherauthors_patent").value=str;
+                        alert(document.getElementById("otherauthors_patent").value);
+                        document.getElementById("form_patent").submit();
+                    }
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                             <div class="tab-pane fade" id="E">
+                                                 <h3>奖学金</h3>
+                                                 <form id="form_scholarship" action="/student/checking/scholarship" method="POST" enctype="multipart/form-data" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                     {% csrf_token %}
+                                                     <div class="form-group">
+                                                         <label for="stu_honorname_scholarship">奖学金名称：</label>
+                                                         <select name="name" id="stu_honorname_scholarship" class="form-control" onchange="javascript:showothers(others_honornamediv_scholarship,this.value);">
+                                                             <option value="null">—— 请选择 ——</option>
+                                                             <option>国家奖学金</option>
+                                                             <option>国家励志奖学金</option>
+                                                             <option>彭康奖学金</option>
+                                                             <option>思源奖学金</option>
+                                                             <option value="others">其他</option>
+                                                         </select>
+                                                     </div>
+                                                     <div class="form-group" id="others_honornamediv_scholarship" style="display: none;">
+                                                         <label>请填写您的奖学金名称：</label>
+                                                         <input name="name_others" class="form-control" id="others_honorname_scholarship">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label for="stu_grade_scholarship">获奖学年度：</label>
+                                                         <select name="year" id="stu_grade_scholarship" class="form-control">
+                                                             <option value="null">—— 请选择 ——</option>
+                                                             <option>大一</option>
+                                                             <option>大二</option>
+                                                             <option>大三</option>
+                                                             <option>大四</option>
+                                                         </select>
+                                                     </div>
+
+
+                                                     <div class="form-group">
+                                                         <label class="control-label" for="stu_num_scholarship"><span>奖学金金额（元/年）：</span></label>
+                                                         <input name="number" id="stu_num_scholarship" class="form-control" type="number">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label class="control-label" for="stu_from_scholarship"><span>授奖单位：</span></label>
+                                                         <input name="company" id="stu_from_scholarship" class="form-control">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label for="stu_provefile_scholarship">证明材料（请上传压缩包）：</label>
+                                                         <br>
+                                                         <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                                             <button class="btn btn-info fileinput-button" type="button">上传</button>
+                                                             <input name="file" type="file" id="stu_provefile_scholarship" onchange="javascript:loadFile(this.files[0],filename_scholarship);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                                                         </div>
+                                                         <span id="filename_scholarship" style="vertical-align: middle">未上传文件</span>
+                                                     </div>
+
+                                                     <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                         <button type="button" class="btn btn-primary btn-block" onclick="submit_scholarship()">提交审核</button>
+                                                     </div>
+                                                     <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+
+                                                 </form>
+                                             </div>
+                <script type="text/javascript">
+                    function submit_scholarship() {
+                        scholarship_name=document.getElementById("stu_honorname_scholarship");
+                        if(scholarship_name.value=="others"){
+                            scholarship_name.value=document.getElementById("others_honorname_scholarship").value;
+                        }
+                        document.getElementById("form_scholarship").submit();
+                    }
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                             <div class="tab-pane fade" id="F">
+                                                 <h3>社会经历（实习、志愿活动、任职）</h3>
+                                                 <form action="/student/checking/experience" method="POST" enctype="multipart/form-data" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                     {% csrf_token %}
+                                                     <div class="form-group">
+                                                         <label>活动名称：</label>
+                                                         <input name="name" class="form-control" id="stu_name_activity">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label>所在单位：</label>
+                                                         <input name="company" class="form-control" id="stu_place_activity">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label>活动开始时间：</label>
+                                                         <input name="startdate" class="form-control" id="stu_begintime_activity" type="date">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label>活动结束时间：</label>
+                                                         <input name="enddate" class="form-control" id="stu_endtime_activity" type="date">
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label>活动描述：</label>
+                                                         <textarea name="info" class="form-control" rows="4" id="stu_description_activity"></textarea>
+                                                     </div>
+
+                                                     <div class="form-group">
+                                                         <label for="stu_provefile_activity">证明材料（请上传压缩包）：</label>
+                                                         <br>
+                                                         <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                                             <button class="btn btn-info fileinput-button" type="button">上传</button>
+                                                             <input name="file" type="file" id="stu_provefile_activity" onchange="javascript:loadFile(this.files[0],filename_activity);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                                                         </div>
+                                                         <span id="filename_activity" style="vertical-align: middle">未上传文件</span>
+                                                     </div>
+
+                                                     <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+                                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                         <button type="submit" class="btn btn-primary btn-block">提交审核</button>
+                                                     </div>
+                                                     <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+
+                                                 </form>
+                                             </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center">
+    <span>西安交通大学网络安全实验室 All rights reserved &copy:2017</span>
+</footer>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/choseFile.js' %}"></script>
+<script src="{% static 'js/showOrHide.js' %}"></script>
+<script src="{% static 'js/addlabel.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>西安交通大学荣誉墙</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrapSwitch.css' %}" rel="stylesheet">
+    <link href="{% static 'css/site.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.js' %}"></script>
+    <![endif]-->
+</head>
+<body class="container">
+<!--<header class="page-header">-->
+<!-- <h1>个人中心<small>Student Center</small></h1>-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">学生个人中心<small>Student Center</small></a>
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse ">
+            <form class="navbar-form  navbar-right hidden-xs">
+                    <a>欢迎：{{ userrelname }}</a>
+                    <a type="button" id="backToFront" class="btn btn-info nav-btn" href="{% url 'index' %}">返回主页</a>
+                    <a type="button" id="student_center" class="btn btn-info nav-btn"  disabled="disabled">我的个人中心</a>
+                    <a type="button" id="myHonorWall" class="btn btn-info nav-btn" href="{% url 'student_center_honorwall' %}">我的荣誉墙</a>
+                    <a type="button" id="logout" class="btn btn-danger nav-btn" href="{% url 'logout' %}">注销</a>
+            </form>
+                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
+                    <li><a>欢迎：{{ userrelname }}</a></li>
+                    <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                    <li><a href="{% url 'student_center_honor' %}">荣誉</a></li>
+                    <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                    <li><a href="{% url 'student_center_recommendation' %}">申请推荐信</a></li>
+                    <li><a href="{% url 'student_center_checking' %}">审核</a></li>
+                    <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                    <li class="active"><a href="">设置<span class="sr-only">(current)</span></a></li>
+                    <li><a href="./my_honorwall/1/">我的荣誉墙</a></li>
+                    <li><a href="{% url 'index' %}">返回主页</a></li>
+                    <li><a href="{% url 'logout' %}">注销</a></li>
+                </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="{% url 'student_center' %}">基本信息</a></li>
+                <li><a href="{% url 'student_center_honor' %}">荣誉</a></li>
+                <li><a href="{% url 'student_center_resume' %}">简历生成</a></li>
+                <li><a href="{% url 'student_center_recommendation' %}">申请推荐信</a></li>
+                <li><a href="{% url 'student_center_checking' %}">审核</a></li>
+                <li><a href="{% url 'student_center_status' %}">审核状态</a></li>
+                <li class="active"><a href="">设置<span class="sr-only">(current)</span></a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <form class="col-lg-12 col-md-12 col-sm-12 col-xs-12" method="POST" action="/student/settings/upload" enctype="multipart/form-data">
+                {% csrf_token %}
+                 <h2 class="sub-header">昵称和头像设置</h2>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <br>
+                    <label class="control-label" for="stu_netname"><span>昵称</span></label>
+                    <input disabled name="nickname" id="stu_netname" placeholder="e.g. 西小交" class="form-control" value="{{ student_message_editable.student_nickname }}">
+                    <br><br>
+                    <label class="control-label" for="stu_signature"><span>个性签名</span></label>
+                    <input disabled name="sign" id="stu_signature" placeholder="e.g. 精勤求学 敦笃励志 果毅力行 忠恕任事" class="form-control" value="{{ student_message_editable.student_sign }}">
+                </div>
+
+
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <br>
+                    <div align="center" id="stu_divtagid_headphoto">
+                        <img id="stu_imgtagid_headphoto" src="" style="width: 150px;height: 150px" class="img-circle img-responsive" alt="">
+                        <script type="text/javascript">
+                            document.getElementById("stu_imgtagid_headphoto").src="/user/student/head/{{ userid }}.jpg?m="+Math.random();
+                        </script>
+                        <h4>您的荣誉墙头像</h4>
+                        <span class="text-muted">大小不超过3M</span><br>
+                        <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                            <button disabled class="btn btn-info fileinput-button" type="button" id="stu_headbutton">上传</button>
+                            <input disabled enctype="multipart/form-data" accept="image/jpeg,image/png,image/bmp" name="head" type="file" id="stu_headphotofile" onchange="javascript:upload_stu_idphoto(this,this.files[0],stu_divtagid_headphoto,stu_imgtagid_headphoto,filename);setSize()" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                            <script type="text/javascript">
+                                function setSize() {
+                                    document.getElementById("stu_imgtagid_headphoto").style.width="150px";
+                                    document.getElementById("stu_imgtagid_headphoto").style.height="150px";
+
+                                }
+                            </script>
+                        </div>
+                        <span id="filename" style="vertical-align: middle">未上传文件</span>
+                    </div>
+                </div>
+
+                <h2 class="sub-header">隐私设置</h2>
+                <span>请在这里设置哪些信息要公开在“我的荣誉墙”上</span><br><br>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <label class="control-label" for="notification1">姓名是否公开{{ student_message_editable.student_name_conceal }}</label>
+                    <div class="switch switch-small" tabindex="0">
+                        <input disabled name="name_status" id="name_status" type="checkbox" {% if student_message_editable.student_name_conceal %}checked{% endif %} />
+                    </div>
+                    <br><br>
+                    <label class="control-label" for="notification2">性别是否公开</label>
+                    <div class="switch switch-small" tabindex="0">
+                        <input disabled name="sex_status" id="sex_status" type="checkbox" {% if student_message_editable.student_sex_conceal %}checked{% endif %} />
+                    </div><br><br>
+                    <label class="control-label" for="notification3">联系方式是否公开</label>
+                    <div class="switch switch-small" tabindex="0">
+                        <input disabled name="phone_status" id="phone_status" type="checkbox" {% if student_message_editable.student_contact_conceal %}checked{% endif %} />
+                    </div>
+                </div>
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+                        <br>
+                        <div style="display: none" id="submit">
+                            <div class="hidden-lg hidden-md hidden-sm col-xs-12">
+                                <button type="submit" class="btn btn-danger btn-block">保存设置<!-- 手机用 --></button>
+                                <a class="btn btn-primary btn-block" href="{% url 'student_center_settings' %}">取消</a>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs">
+                                <button type="submit" class="btn btn-danger btn-block">保存设置<!-- 电脑用 --></button>
+                                <a class="btn btn-primary btn-block" href="{% url 'student_center_settings' %}">取消</a>
+                            </div>
+                        </div>
+                        <div style="display: block" id="change">
+                            <div class="hidden-lg hidden-md hidden-sm col-xs-12">
+                                <button type="button" class="btn btn-primary btn-block" onclick="change()">修改设置<!-- 手机用 --></button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs">
+                                <button type="button" class="btn btn-primary btn-block" onclick="change()">修改设置<!-- 电脑用 --></button>
+                            </div>
+                        </div>
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs"></div>
+                </div>
+            </form>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 20px;">
+                <h2 class="sub-header">生成外网访问荣誉墙的一次性连接</h2>
+                <input name="url_yijiami" value="" placeholder="e.g. 张三" class="form-control">
+                <br>
+                <button name="shengchengjiamilianjie" class="btn btn-primary" onclick="">生成链接</button>
+                <button name="fuzhi" class="btn btn-primary" onclick="">复制到剪贴板</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center">
+    <span>西安交通大学网络安全实验室 All rights reserved &copy:2017</span>
+</footer>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/bootstrapSwitch.js' %}"></script>
+<script src="{% static 'js/choseFile.js' %}"></script>
+<script type="text/javascript">
+        function change() {
+            document.getElementById("submit").style.display="block";
+            document.getElementById("change").style.display="none";
+            document.getElementById("stu_netname").disabled=false;
+            document.getElementById("stu_signature").disabled=false;
+            document.getElementById("stu_headbutton").disabled=false;
+            document.getElementById("stu_headphotofile").disabled=false;
+            document.getElementById("name_status").disabled=false;
+            document.getElementById("sex_status").disabled=false;
+            document.getElementById("phone_status").disabled=false;
+        }
+</script>
+</body>
+</html>

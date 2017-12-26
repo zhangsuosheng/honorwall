@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>荣誉墙个人中心(教师)</title>
+
+    <!-- Bootstrap -->
+      {% load static %}
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/teacher_center_competition.css' %}" rel="stylesheet">
+      <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a type="a" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="navbar-brand" href="#">管理中心</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">返回主页</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul> -->
+            <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                <img class="" src="" alt="图标"/>
+                <!-- 用户登陆后用户名信息 -->
+                <p id="log-welcome-teacher">欢迎XXX</p>
+                <a class="btn btn-info nav-btn" disabled>管理中心</a>
+                <a class="btn btn-info nav-btn" >返回主页</a>
+                <a id="teacher-logout"class="btn btn-danger nav-btn">登出</a>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="./checking">审核 <span class="sr-only">(current)</span></a></li>
+                
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./studentmessagechange">学生信息修改/查询</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="./message_out">信息管理</a></li>
+                <li class="second active"><a href="./message_out">&nbsp&nbsp&nbsp信息发布</a></li>
+                <li class="second"><a href="./message_outed">&nbsp&nbsp&nbsp已发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./letter_checked">审核推荐信</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./setting">设置</a></li>
+            </ul>
+        </div>
+        <!--页面其他部分的内容  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="dropdown hidden-lg hidden-md hidden-sm col-xs-12" align="center">
+                <a class="btn btn-warning btn-block dropdown-toggle" type="a" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    当前位置：信息发布
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+                    <li><a href="./checking">审核</a></li>
+                    <li><a href="./studentmessagechange">学生信息修改查询</a></li>
+                    <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+                    <li><a href="./message_out">信息发布</a></li>
+                    <li><a href="./message_outed">已发布信息</a></li>
+                    <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+                    <li><a href="./letter_checked">审核推荐信</a></li>
+                    <li><a href="./setting">设置</a></li>
+                </ul>
+            </div> 
+        </div>
+      </div>
+      <div class="col-sm-9 navbar-right" style="margin-right:4.5%">
+          <form method="post" action="./message_out_2" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" id="title" name="title" class="form-control"/>
+              </div>
+              <div class="form-group">
+                  <label for="class">类别</label>
+                  <select id="class" name="class" class="form-control">
+                        <option value="1">竞赛</option>
+                        <option value="2">期刊论文</option>
+                        <option value="3">会议论文</option>
+                        <option value="4">专利</option>
+                        <option value="5">奖学金</option>
+                        <option value="6">社会经历</option>
+                        <option value="7">其他</option>
+                  </select>
+              </div>
+          <div id="id_here" style="display: none;">{{ id }}</div>
+              <div class="form-group">
+                    <label for="file">附件</label>
+                    <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                        <a class="btn btn-info" type="a" style="margin-left:20px">选择文件</a>
+                        <input type="file" id="stu_provefile_contest" name="stu_provefile_contest" onchange="javascript:upload_stu_provefile(this.files[0],filename_contest);" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                    </div>
+                    <span id="filename_contest" style="vertical-align: middle">未上传文件</span>
+              </div>
+              <div class="form-group">
+                  <label for="content">内容:</label>
+                  <textarea id="summernote" name="summernote" ></textarea>
+              </div>
+
+              <div>
+              {% if not already %}<input class="btn btn-success" type="submit"/>{% endif %}
+              {% if already %}
+                                <a class="btn btn-success" id="change">修改</a>
+                                <a class="btn btn-warning" id="delete">撤销</a>
+                                <a class="btn btn-danger" href="./message_outed">返回</a>
+              {% endif %}
+              </div>
+
+          </form>
+      </div>
+    </div>
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/chooseFile.js' %}"></script>
+    <script src="{% static 'js/summernote.js' %}"></script>
+    <script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height:300,
+            minHeight:null,
+            maxHeight:null,
+            focus: true,
+            lang:'zh-CN',
+        });
+    });
+    </script>
+  <script src="{% static 'js/csrf.js' %}"></script>
+  {% if already %}<script src="{% static 'js/message_out.js' %}"></script>{% endif %}
+  </body>
+</html>

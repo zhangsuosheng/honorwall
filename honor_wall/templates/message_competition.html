@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>西安交通大学荣誉墙</title>
+
+<!-- Bootstrap -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/index.css" rel="stylesheet">
+<script src="../js/index.js"></script>
+
+</head>
+<body>
+    
+ <!-- 导航栏 反色(底部黑字体白) 固定在顶部  过窄的时候折叠不可见(设定bodypadding-top为70px了) -->
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-collapse">
+        <div class="container">
+            <!-- navbar-header内部放置<a>标签 -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"> <img src="/Users/mac/Desktop/前端练习/大作业/视觉4/picture_suilin/4.jpg" alt="这里是图片" style="width:40px;height:30px;margin-top:-4px"></a>
+                <a class="navbar-brand" href="#">荣誉墙</a>
+                <!--按钮小于768px时才会显示  -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-nav" aria-expanded="false" aria-controls="navbar-nav">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div id="navbar-nav" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">积分榜</a></li>
+                    <li><a href="#">学院通知</a></li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">获奖<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="active"><a href="#">竞赛</a></li>
+                            <li><a href="#">论文</a></li>
+                            <li><a href="#">专利</a></li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- 登录前 -->
+                <div id="navbar-log-before" class="navbar-collapse collapse">
+                  <form id="navbar-log-before-form" class="navbar-form navbar-right">
+                  <div class="form-group">
+                    <label class="control-label sr-only" ></label>
+                    <button id="student-login" class="btn btn-success nav-btn" onclick="click()">学生登录</button>
+                    <button id="teacher-login" class="btn btn-success nav-btn" onclick="click()">教师登录</button>
+                  </div>
+                  </form>
+                </div>
+                <!-- 登陆后 -->
+                <!--学生登录后  -->
+                <div id="navbar-log-after-student" class="" >
+                    <form id="navbar-log-after-form-student" class="navbar-form navbar-right">
+                        <img class="" src="" alt="图标"/>
+                        <!-- 用户登陆后用户名信息 -->
+                        <p id="log-welcome-student">欢迎XXX</p>
+                        <button class="btn btn-info nav-btn">个人中心</button>
+                        <button class="btn btn-info nav-btn">我的荣誉</button>
+                        <button id="student-logout" class="btn btn-danger nav-btn">登出</button>
+                    </form>
+                </div>
+                <!--老师登陆后  -->
+                <div id="navbar-log-after-teacher" class="" >
+                    <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                        <img class="" src="" alt="图标"/>
+                        <!-- 用户登陆后用户名信息 -->
+                        <p id="log-welcome-teacher">欢迎XXX</p>
+                        <button class="btn btn-info nav-btn">管理中心</button>
+                        <button id="teacher-logout"class="btn btn-danger nav-btn">登出</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="text-align:center">
+        <div class="col-lg-3 hidden-xs" style="border-left:0px;border-right:1px solid #333333">
+            <div id="competition_logo"><img src="../picture/pic.jpg" alt="这里是图片"></div>
+            <div id="competition_descirbe" style="margin-top:50px">全国大学生数学建模竞赛创办于1992年，每年一届，目前已成为全国高校规模最大的基础性学科竞赛，也是世界上规模最大的数学建模竞赛。2016年，来自全国33个省/市/自治区（包括香港和澳门特区）及新加坡的1367所院校、31199个队（其中本科组28046队、专科组3153队）、近93000名大学生报名参加本项竞赛。[1] </div>
+        </div>
+        <div class="col-lg-8"  style="border-left:0px;border-right:1px solid #333333">
+            <div class="row" style="text-align:center">
+                <h2 id="title">中国大学生数学建模竞赛获奖名单</h2>
+                <h3 id="subtitle"><small>发布日期:2017年12月10日</small>
+            </div>
+            <div class="row" style="margin-top:50px">
+                <p>恭喜我校数学建模比赛取得好成绩，获奖名单如下:<br>
+                            国家一等奖：XXX，XXX，XXX。<br>
+                            国家二等奖：XXX，XXX，XXX。<br>
+                            国家三等奖：XXX，XXX，XXX。<br>
+                            省一等奖：XXX，XXX，XXX。<br>
+                            <code>&ltsmall&gthello&lt/small&gt</code>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+      <div id="footer" style="text-align:center">
+        <p> 西安交通大学荣誉墙 版权所有 Copyright © 2004-2016 All Rights Reserved</p>
+        <p>(推荐使用Chrome、Firefox、IE9.0以上版本浏览器进行访问）</p>
+      </div>
+    </footer>
+
+    <!-- JS引入 -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

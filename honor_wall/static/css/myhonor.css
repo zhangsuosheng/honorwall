@@ -1,0 +1,36 @@
+body { padding-top: 50px; }
+.inline{
+    display: inline;
+
+}
+#log-welcome-student,#log-welcome-teacher{
+    display: inline;
+    color: #eeeeee;
+    margin-left: 10px;
+}
+#navbar-log-after-form-student,#navbar-log-after-form-teacher{
+    display: none; 
+    position: fixed;
+    right: 0;
+    top: 0px; 
+    /* z-index: 10000; */
+}
+#navbar-log-before-form{
+    display: inline-block;
+    /* display: block; */
+}
+#teacher-login{
+    margin-left: 10px;
+}
+.div-left{
+    width: 30%;
+    border-right: 2px solid blue;
+    float: left;
+}
+.div-right{
+    width:60%;
+    float: left;
+}
+#honor-human{
+    margin-top: 40%;
+}

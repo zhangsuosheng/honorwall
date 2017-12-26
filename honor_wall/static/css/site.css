@@ -1,0 +1,44 @@
+body{
+    padding: 0px;
+}
+
+/*header,footer,nav,div,section,aside,article{*/
+    /*border:0px dotted #f0f0f0;*/
+    /*border-radius: 0px;*/
+/*}*/
+
+a,a:hover{
+    text-decoration: none;
+}
+
+.divContent{
+    min-height: 350px;
+}
+.headName{
+    margin-bottom: 10px;
+    font-family: Arial;
+    color: #ffffff;
+}
+
+.headNameonPhone{
+    margin-bottom: 5px;
+    font-family: Arial;
+    color: black;
+}
+
+.selfinfo{
+    margin-bottom: 5px;
+    font-family: Arial;
+    font-size:15px;
+}
+.headformyhonorwall{
+    font-family: 幼圆;
+    font-size: 15px;
+    color: black;
+}
+.headformyhonorwall:hover{
+    font-family: 幼圆;
+    font-size: 15px;
+    color: white;
+    background-color: #990033;
+}

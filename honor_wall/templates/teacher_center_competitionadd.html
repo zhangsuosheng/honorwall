@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>荣誉墙个人中心(教师)</title>
+
+    <!-- Bootstrap -->
+      {% load static %}
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/teacher_center_competition.css' %}" rel="stylesheet">
+      <link href="{% static 'css/jquery.typeahead.min.css' %} "rel="stylesheet" >
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a type="a" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="navbar-brand" href="#">管理中心</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">返回主页</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul> -->
+            <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                <img class="" src="" alt="图标"/>
+                <!-- 用户登陆后用户名信息 -->
+                <p id="log-welcome-teacher">欢迎XXX</p>
+                <a class="btn btn-info nav-btn" disabled>管理中心</a>
+                <a class="btn btn-info nav-btn" >返回主页</a>
+                <a id="teacher-logout"class="btn btn-danger nav-btn">登出</a>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="./checking">审核 <span class="sr-only">(current)</span></a></li>
+                
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./studentmessagechange">学生信息修改/查询</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="./competitionadd">竞赛奖项设置添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./message_out">信息管理</a></li>
+                <li class="second"><a href="./message_out">&nbsp&nbsp&nbsp信息发布</a></li>
+                <li class="second"><a href="./message_outed">&nbsp&nbsp&nbsp已发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./letter_checked">审核推荐信</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./setting">设置</a></li>
+            </ul>
+        </div>
+        <!--页面其他部分的内容  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="dropdown hidden-lg hidden-md hidden-sm col-xs-12" align="center">
+                <a class="btn btn-warning btn-block dropdown-toggle" type="a" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    当前位置：竞赛奖项设置添加
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+                    <li><a href="./checking">审核</a></li>
+                    <li><a href="./studentmessagechange">学生信息修改查询</a></li>
+                    <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+                    <li><a href="./message_out">信息发布</a></li>
+                    <li><a href="./message_outed">已发布信息</a></li>
+                    <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+                    <li><a href="./letter_checked">审核推荐信</a></li>
+                    <li><a href="./setting">设置</a></li>
+                </ul>
+            </div> 
+        </div>
+      </div>
+      <div class="col-sm-9 navbar-right" style="margin-right:4.5%">
+            <div class="hidden-lg hidden-md hidden-sm col-xs-12"><br></div>
+            <ul id="myTab" class="nav nav-tabs">
+                <li  id="cop1"><a href="#A" data-toggle="tab">竞赛奖项添加/修改</a></li>
+                <li id="cop2" class="active"><a href="#B" data-toggle="tab">竞赛奖项列表</a> </li>
+{#                <li><a href="#B" data-toggle="tab">期刊论文添加/修改</a></li>#}
+{#                <li><a href="#C" data-toggle="tab">会议论文添加/修改</a></li>#}
+{#                <li><a href="#D" data-toggle="tab">专利添加/修改</a></li>#}
+{#                <li><a href="#E" data-toggle="tab">奖学金添加/修改</a></li>#}
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+
+                <div class="tab-pane fade in" id="A">
+                    <h3>竞赛奖项</h3>
+                    <form class="form-horizontal" style="margin-left:40px">
+                        <div class="form-group">
+                            <label for="name">竞赛名称</label>
+                            <div class="typeahead__container">
+                                <div class="typeahead__field">
+                                    <span class="typeahead__query">
+                                        <input class="js-typeahead"
+                                               name="q"
+                                               type="search"
+                                               autocomplete="off"
+                                                id="name">
+                                    </span>
+                                    <span class="typeahead__button">
+                                        <button type="submit">
+                                            <span class="typeahead__search-icon"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="form-horizontal" style="margin-left:40px">
+                            <div class="form-group">
+                                    <label for="competition_level">竞赛级别</label>
+                                    <select id="competition_level" class="form-control">
+                                        <option value="1">国际级</option>
+                                        <option value="2">国家级</option>
+                                        <option value="3">西北赛区级(包括其他赛区级)</option>
+                                        <option value="4">省级</option>
+                                        <option value="5">校级</option>
+                                        <option value="-1">不分级</option>
+                                        <option value="0">其他</option>
+                                    </select>
+                                </div>
+                            <div class="form-group">
+                                <label for="level">获奖级别</label>
+                                <select id="level" class="form-control">
+                                    <option>一等奖</option>
+                                    <option>二等奖</option>
+                                    <option>三等奖</option>
+                                    <option>特等奖</option>
+                                    <option>金牌</option>
+                                    <option>银牌</option>
+                                    <option>铜牌</option>
+                                    <option>其他</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="points">积分数目</label>
+                                <input type="text" id="points" placeholder="请输入积分" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="competition_message">竞赛信息:</label>
+                                <textarea class="form-control" name="competition_message" id="competition_message" cols="30" rows="5"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label></label>
+                                <div class="col-sm-1">
+                                    <a class="btn btn-success" id="submit">提交</a>
+                                </div>
+                                <div class="col-sm-1">
+                                    <a class="btn btn-primary" id="cancel">取消</a>
+                                </div>
+                                <div class="col-sm-1">
+                                    <a class="btn btn-danger" id="delete">信息删除</a>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+
+
+
+
+
+
+
+                <div class="tab-pane fade in active " id="B">
+                    <h3>竞赛奖项列表</h3>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr class="info">
+                                <th>竞赛名称</th>
+                                <th>竞赛等级</th>
+                                <th>获奖级别</th>
+                                <th>获奖积分</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            {% for me in message %}
+                                <tr {% if count == 1 %}class="success"{% endif %}>
+                                    <th>{{ me.competition_name }}</th>
+                                    <th>{% if me.competition_competition_level == 1 %}国际级{% elif me.competition_competition_level == 2 %}国家级{% elif me.competition_competition_level == 3 %}西北赛区级(包括其他赛区级){% elif me.competition_competition_level == 4 %}省级{% elif me.competition_competition_level == 5 %}校级{% elif me.competition_competition_level == -1 %}不分级{% elif me.competition_competition_level == 0 %}其他{% endif %}</th>
+                                    <th>{{ me.competition_level }}</th>
+                                    <th>{{ me.competition_point }}</th>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#                <div class="tab-pane fade" id="B">#}
+{#                    <h3>期刊论文</h3>#}
+{#                    <form class="form-horizontal" style="margin-left:40px">#}
+{#                            <div class="form-group">#}
+{#                                <label for="name">期刊论文名称</label>#}
+{#                                <input type="text" id="name" placeholder="请输入期刊论文名称(名称重复会更改已有信息)" class="form-control"/>#}
+{#                            </div>#}
+{#                            #}
+{#                            <div class="form-group">#}
+{#                                <label for="level">期刊论文级别</label>#}
+{#                                <select id="level" class="form-control">#}
+{#                                    <option>TOP学术期刊</option>#}
+{#                                    <option>SCI收录学术期刊</option>#}
+{#                                    <option>SSC收录学术期刊</option>#}
+{#                                    <option>EI收录学术期刊</option>#}
+{#                                    <option>国内一级学术期刊</option>#}
+{#                                    <option>国内核心学术期刊</option>#}
+{#                                    <option>其他</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="points">积分数目</label>#}
+{#                                <input type="text" id="points" placeholder="请输入积分" class="form-control"/>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="competition_message">期刊论文信息:</label>#}
+{#                                <textarea class="form-control" name="competition_message" id="competition_message" cols="30" rows="5"></textarea>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label></label>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-success">提交</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-primary">取消</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-danger">信息删除</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                </div>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#                <div class="tab-pane fade" id="C">#}
+{#                    <h3>高水平学术会议论文</h3>#}
+{#                    <form class="form-horizontal" style="margin-left:40px">#}
+{#                            <div class="form-group">#}
+{#                                <label for="name">高水平学术会议论文名称</label>#}
+{#                                <input type="text" id="name" placeholder="请输入高水平学术会议论文名称(名称重复会更改已有信息)" class="form-control"/>#}
+{#                            </div>#}
+{#                            #}
+{#                            <div class="form-group">#}
+{#                                <label for="level">高水平学术会议论文级别</label>#}
+{#                                <select id="level" class="form-control">#}
+{#                                    <option>国际大会特邀报告</option>#}
+{#                                    <option>国际分组报告或展示</option>#}
+{#                                    <option>国内大会特邀报告</option>#}
+{#                                    <option>国内分组报告或展示</option>#}
+{#                                    <option>IEEE认定的国际会议</option>#}
+{#                                    <option>一般性国际会议</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="points">积分数目</label>#}
+{#                                <input type="text" id="points" placeholder="请输入积分" class="form-control"/>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="competition_message">高水平学术会议论文信息:</label>#}
+{#                                <textarea class="form-control" name="competition_message" id="competition_message" cols="30" rows="5"></textarea>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label></label>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-success">提交</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-primary">取消</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-danger">信息删除</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                </div>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#                <div class="tab-pane fade" id="D">#}
+{#                    <h3>专利</h3>#}
+{#                    <form class="form-horizontal" style="margin-left:40px">#}
+{#                            <div class="form-group">#}
+{#                                <label for="name">专利名称</label>#}
+{#                                <input type="text" id="name" placeholder="请输入专利名称(名称重复会更改已有信息)" class="form-control"/>#}
+{#                            </div>#}
+{#                            #}
+{#                            <div class="form-group">#}
+{#                                <label for="level">专利级别</label>#}
+{#                                <select id="level" class="form-control">#}
+{#                                    <option>发明专利</option>#}
+{#                                    <option>实用新型专利</option>#}
+{#                                    <option>国际发明专利（美日欧）</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="points">积分数目</label>#}
+{#                                <input type="text" id="points" placeholder="请输入积分" class="form-control"/>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="competition_message">专利信息:</label>#}
+{#                                <textarea class="form-control" name="competition_message" id="competition_message" cols="30" rows="5"></textarea>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label></label>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-success">提交</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-primary">取消</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-danger">信息删除</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                </div>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#                <div class="tab-pane fade" id="E">#}
+{#                    <h3>奖学金</h3>#}
+{#                    <form class="form-horizontal" style="margin-left:40px">#}
+{#                            <div class="form-group">#}
+{#                                <label for="name">奖学金名称</label>#}
+{#                                <input type="text" id="name" placeholder="请输入奖学金名称(名称重复会更改已有信息)" class="form-control"/>#}
+{#                            </div>#}
+{#                            #}
+{#                            <div class="form-group">#}
+{#                                <label for="level">奖学金级别</label>#}
+{#                                <select id="level" class="form-control">#}
+{#                                    <option>国家奖学金</option>#}
+{#                                    <option>国家励志奖学金</option>#}
+{#                                    <option>彭康奖学金</option>#}
+{#                                    <option>思源奖学金</option>#}
+{#                                    <option>其他</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="points">积分数目</label>#}
+{#                                <input type="text" id="points" placeholder="请输入积分" class="form-control"/>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label for="competition_message">奖学金信息:</label>#}
+{#                                <textarea class="form-control" name="competition_message" id="competition_message" cols="30" rows="5"></textarea>#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label></label>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-success">提交</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-primary">取消</a>#}
+{#                                </div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    <a class="btn btn-danger">信息删除</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                </div>#}
+
+
+
+
+
+            </div>
+        
+      </div>
+    </div>
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.typeahead.min.js' %}"></script>
+    <script src="{% static 'js/csrf.js' %}"></script>
+    <script src="{% static 'js/competitionadd.js' %}"></script>
+
+  </body>
+</html>

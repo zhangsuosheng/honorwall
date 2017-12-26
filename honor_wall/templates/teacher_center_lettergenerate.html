@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>荣誉墙个人中心(教师)</title>
+
+    <!-- Bootstrap -->
+      {% load static %}
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/teacher_center_competition.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a type="a" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="navbar-brand" href="#">管理中心</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">返回主页</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul> -->
+            <form id="navbar-log-after-form-teacher" class="navbar-form navbar-right">
+                <img class="" src="" alt="图标"/>
+                <!-- 用户登陆后用户名信息 -->
+                <p id="log-welcome-teacher">欢迎XXX</p>
+                <a class="btn btn-info nav-btn" disabled>管理中心</a>
+                <a class="btn btn-info nav-btn" >返回主页</a>
+                <a id="teacher-logout"class="btn btn-danger nav-btn">登出</a>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="./checking">审核 <span class="sr-only">(current)</span></a></li>
+                
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./studentmessagechange">学生信息修改/查询</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./message_out">信息管理</a></li>
+                <li class="second"><a href="./message_out">&nbsp&nbsp&nbsp信息发布</a></li>
+                <li class="second"><a href="./message_outed">&nbsp&nbsp&nbsp已发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./letter_checked">审核推荐信</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="./setting">设置</a></li>
+            </ul>
+        </div>
+        <!--页面其他部分的内容  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="dropdown hidden-lg hidden-md hidden-sm col-xs-12" align="center">
+                <a class="btn btn-warning btn-block dropdown-toggle" type="a" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    当前位置：推荐信/简历批量生成
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="width:100%">
+                    <li><a href="./checking">审核</a></li>
+                    <li><a href="./studentmessagechange">学生信息修改查询</a></li>
+                    <li><a href="./competitionadd">竞赛奖项设置添加</a></li>
+                    <li><a href="./message_out">信息发布</a></li>
+                    <li><a href="./message_outed">已发布信息</a></li>
+                    <li><a href="./lettergenerate">推荐信/简历批量生成</a></li>
+                    <li><a href="./letter_checked">审核推荐信</a></li>
+                    <li><a href="./setting">设置</a></li>
+                </ul>
+            </div> 
+        </div>
+      </div>
+      <div class="col-sm-9 navbar-right" style="margin-right:4.5%">
+            <form>
+                    <div class="form-group" style="text-align:center">
+                        <div class="col-sm-4">
+                        <label for="id" style="float:left">学号</label>
+                        <input type="text" id="id" placeholder="请输入要查询的学号" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="nickname" style="float:left">姓名</label> 
+                            <input type="text" id="nickname" placeholder="请输入要查询的姓名" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                        <label for="grade" style="float:left">年级</label>
+                         <select id="grade" class="form-control">
+                            <option value="null">请选择</option>
+                            <option>2017</option>
+                            <option>2016</option>
+                            <option>2015</option>
+                            <option>2014</option>
+                        </select>
+                        </div>
+                        <label for="class"></label>
+                        
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                            
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                        <div class="col-sm-4">
+                            <label for="field" style="float:left">专业</label>
+                            <select id="field" class="form-control">
+                                <option value="null">请选择</option>
+                                <option>计算机</option>
+                                <option>电子信息</option>
+                                <option>自动化</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                        <label for="classroom" style="float:left">班级</label>
+                        <select id="classroom" class="form-control">
+                             <option value="null">请选择</option>
+                            <option>71</option>
+                            <option>72</option>
+                            <option>73</option>
+                            <option>74</option>
+                            <option>75</option>
+                            <option>76</option>
+                            <option>77</option>
+                            <option>78</option>
+                            <option>79</option>
+                            <option>710</option>
+                            <option>711</option>
+                            <option>712</option>
+                            <option>61</option>
+                            <option>62</option>
+                            <option>63</option>
+                            <option>64</option>
+                            <option>65</option>
+                            <option>66</option>
+                            <option>67</option>
+                            <option>68</option>
+                            <option>69</option>
+                            <option>610</option>
+                            <option>611</option>
+                            <option>612</option>
+                            <option>51</option>
+                            <option>52</option>
+                            <option>53</option>
+                            <option>54</option>
+                            <option>55</option>
+                            <option>56</option>
+                            <option>57</option>
+                            <option>58</option>
+                            <option>59</option>
+                            <option>510</option>
+                            <option>511</option>
+                            <option>512</option>
+                            <option>41</option>
+                            <option>42</option>
+                            <option>43</option>
+                            <option>44</option>
+                            <option>45</option>
+                            <option>46</option>
+                            <option>47</option>
+                            <option>48</option>
+                            <option>49</option>
+                            <option>410</option>
+                            <option>411</option>
+                            <option>412</option>
+                        </select>
+                        </div>
+                        <a id="search" class="btn btn-success navbar-right" style="margin-top:45px;margin-right:10%">学生查询</a>
+                        <label for="class"></label>
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                    </div>
+              </form>
+              <br><br><br><br>
+              <div style="text-align:right;padding-right:20px"><a href="#" class="btn btn-warning" style="margin-right:20px;" >全部简历生成</a><a href="#" class="btn btn-warning" >全部推荐信生成</a></div>
+{#          <table style="margin-top:20px;" class="table table-striped table-bordered table-condensed">#}
+{#              <thead>#}
+{#                  <tr class="info">#}
+{#                      <th>学号</th>#}
+{#                      <th>姓名</th>#}
+{#                      <th>专业</th>#}
+{#                      <th>班级</th>#}
+{#                      <th style="width:200px">操作</th>#}
+{#                  </tr>#}
+{#              </thead>#}
+{#              <tbody>#}
+{#                  <tr class="success">#}
+{#                        <th>2171802027</th>#}
+{#                        <th>张三</th>#}
+{#                        <th>计算机</th>#}
+{#                        <th>62</th>#}
+{#                        <th><a href="#" class="btn btn-xs btn-warning" style="margin-right:20px;">简历生成</a><a href="#" class="btn btn-xs btn-warning" >推荐信生成</a></th>#}
+{#                  </tr>#}
+{#                  <tr>#}
+{#                        <th>2171802027</th>#}
+{#                        <th>张三</th>#}
+{#                        <th>计算机</th>#}
+{#                        <th>62</th>#}
+{#                        <th><a href="#" class="btn btn-xs btn-warning" style="margin-right:20px;">简历生成</a><a href="#" class="btn btn-xs btn-warning" >推荐信生成</a></th>#}
+{#                    </tr>#}
+{#              </tbody>#}
+{#          </table>#}
+          <div id="table"></div>
+      </div>
+    </div>
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/csrf.js' %}"></script>
+    <script src="{% static 'js/lettergenerate.js' %}"></script>
+  </body>
+</html>
